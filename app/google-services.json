@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "169107748767",
+    "firebase_url": "https://blasa-v2-8675.firebaseio.com",
+    "project_id": "blasa-v2-8675",
+    "storage_bucket": "blasa-v2-8675.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:169107748767:android:855046ceb2e0b4b6",
+        "android_client_info": {
+          "package_name": "blasa.go"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "169107748767-qk2o9es4p2q7ip3fbb770408i5f8cllf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "blasa.go",
+            "certificate_hash": "338b775f6dd705b5d4c9a090f9524a47268305ea"
+          }
+        },
+        {
+          "client_id": "169107748767-jm7qmu36fm0i8kc9ij4tcqhg3q7b5ivg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCctgNf7ZLu1P0PpsSotDLAhONyqfdIuBQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "169107748767-jm7qmu36fm0i8kc9ij4tcqhg3q7b5ivg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
