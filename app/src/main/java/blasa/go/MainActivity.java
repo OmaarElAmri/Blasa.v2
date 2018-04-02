@@ -1,24 +1,42 @@
 package blasa.go;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class MainActivity extends AppCompatActivity {
-
+private Button btn_register;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        printKeyHash();
+btn_register = (Button) findViewById(R.id.btn_register);
+btn_register.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        startActivity(new Intent(MainActivity.this, sign_up.class));
     }
-    private void printKeyHash() {
+});
+
+
+
+
+
+
+
+
+        //printKeyHash();
+    }
+    /*private void printKeyHash() {
         try{
 
 
@@ -35,5 +53,13 @@ public class MainActivity extends AppCompatActivity {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-    }
+    }*/
+
+
+
+
+
+
+
+
 }

@@ -1,9 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="blasa.go.MainActivity">
+    android:orientation="vertical"
+    tools:context="blasa.go.MainActivity"
+    android:background="@drawable/background">
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="85dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="85dp"
+        android:backgroundTint="#80ffffff"
+        app:cardCornerRadius="15dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <EditText
+                android:id="@+id/txt_email"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="17dp"
+                android:background="@drawable/edittextstyle"
+                android:hint="Email" />
+            <EditText
+                android:id="@+id/txt_password"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/edittextstyle"
+                android:hint="Password" />
+            <Button
+                android:id="@+id/btn_signin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/edittextstyle"
+                android:backgroundTint="#4267B2"
+                android:text="Sign in"
+                android:textColor="#ffff"/>
+            <Button
+                android:id="@+id/forgot_password"
+                android:background="@null"
+                android:text="Forgot password?"
+                android:textSize="13sp"
+                android:textColor="#ffff"
+                android:textStyle="bold"
+                android:layout_width="250dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"/>
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/fb_sign_in_button"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
 
-</android.support.constraint.ConstraintLayout>
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"/>
+            <Button
+                android:id="@+id/btn_register"
+                android:layout_width="250dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="80dp"
+                android:background="@null"
+                android:backgroundTint="#80ffffff"
+                android:text="new here ? register now!"
+                android:textSize="13sp"
+                android:textColor="#ffff"
+                android:textStyle="bold"/>
+
+
+
+
+
+
+
+
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+
+</LinearLayout>
