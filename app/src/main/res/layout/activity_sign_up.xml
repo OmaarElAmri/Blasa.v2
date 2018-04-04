@@ -10,13 +10,21 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="110dp"
         android:layout_marginEnd="50dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="50dp"
         android:backgroundTint="#80ffffff"
         app:cardCornerRadius="15dp"
         >
+        <ProgressBar
+            android:id="@+id/progress_bar_sign_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -26,7 +34,7 @@
                 android:layout_width="250dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="17dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/edittextstyle"
                 android:hint="Username" />
             <EditText
@@ -34,7 +42,7 @@
                 android:layout_width="250dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/edittextstyle"
                 android:hint="Email" />
             <EditText
@@ -42,7 +50,7 @@
                 android:layout_width="250dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/edittextstyle"
                 android:hint="Password" />
             <EditText
@@ -50,17 +58,72 @@
                 android:layout_width="250dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/edittextstyle"
                 android:hint="Car Type / Model" />
-            <ImageButton
-                android:id="@+id/btn_male"
-                android:layout_width="100dp"
+            <EditText
+                android:id="@+id/txt_phone"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/edittextstyle"
+                android:hint="Phone Number" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="13dp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/btn_female"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="70dp"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/female__40px"
+                    android:background="#ffff"/>
+
+                <ImageButton
+                    android:id="@+id/btn_male"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="30dp"
+                    android:src="@drawable/male__40px"
+                    android:background="#ffff"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="285dp"
                 android:layout_height="100dp"
-                android:layout_marginRight="15dp"
-                android:background="@drawable/male_100px" />
+                android:layout_marginTop="1dp">
 
+                <Button
+                    android:id="@+id/btn_signup"
+                    android:layout_width="90dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edittextstyle"
+                    android:backgroundTint="#4267B2"
+                    android:text="Sign up"
+                    android:textColor="#ffff" />
 
+                <Button
+                    android:id="@+id/btn_clear"
+                    android:layout_width="90dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="80dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edittextstyle"
+                    android:backgroundTint="#4267B2"
+                    android:text="clear"
+                    android:textColor="#ffff" />
+            </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>
