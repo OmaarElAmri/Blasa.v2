@@ -23,7 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class sign_up extends AppCompatActivity {
 private Button btn_signup,btn_clear ;
 private ImageButton btn_female,btn_male;
-private EditText txt_username,txt_email2,txt_password2,txt_car,txt_phone;
+private EditText txt_username,txt_email2,txt_password2;
 private String g="";
 
     private static final String TAG = "TEST_TEST";
@@ -45,8 +45,8 @@ private String g="";
         txt_username = (EditText) findViewById(R.id.txt_username);
         txt_email2 = (EditText) findViewById(R.id.txt_email2);
         txt_password2 = (EditText) findViewById(R.id.txt_password2);
-        txt_car = (EditText) findViewById(R.id.txt_car);
-        txt_phone = (EditText) findViewById(R.id.txt_phone);
+
+
 
         btn_male.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,10 +76,8 @@ g="male";
     protected void setUpUser() {
         user = new User();
         user.setName(txt_username.getText().toString());
-        user.setPhoneNumber(txt_phone.getText().toString());
         user.setEmail(txt_email2.getText().toString());
         user.setPassword(txt_password2.getText().toString());
-        user.setPhoneNumber(txt_phone.getText().toString());
         user.setGender(g);
 
     }
@@ -93,8 +91,6 @@ btn_male.setVisibility(View.VISIBLE);
         txt_username.setText("");
         txt_email2.setText("");
         txt_password2.setText("");
-        txt_car.setText("");
-        txt_phone.setText("");
     }
 
 
@@ -145,15 +141,15 @@ btn_male.setVisibility(View.VISIBLE);
 
     private void onAuthenticationSucess(FirebaseUser mUser) {
         // Write new user
-        saveNewUser(mUser.getUid(), user.getName(), user.getPhoneNumber(), user.getEmail(), user.getPassword(), user.getCartype(), user.getGender());
+        saveNewUser(mUser.getUid(), user.getName(), user.getEmail(), user.getPassword(), user.getGender());
         signOut();
         // Go to LoginActivity
         startActivity(new Intent(sign_up.this, MainActivity.class));
         finish();
     }
 
-    private void saveNewUser(String userId, String name, String phone, String email, String password, String cartype, String gender) {
-        User user = new User(userId,name,phone,email,password,cartype,gender);
+    private void saveNewUser(String userId, String name, String email, String password, String gender) {
+        User user = new User(userId,name,email,password,gender);
 
         mRef.child("users").child(userId).setValue(user);
     }
@@ -188,22 +184,6 @@ btn_male.setVisibility(View.VISIBLE);
             valid = false;
         }else {
             txt_username.setError(null);
-        }
-
-        String usercartype = txt_car.getText().toString();
-        if(TextUtils.isEmpty(userusername)){
-            txt_car.setError("Required.");
-            valid = false;
-        }else {
-            txt_car.setError(null);
-        }
-
-        String userphone = txt_phone.getText().toString();
-        if(TextUtils.isEmpty(userusername)){
-            txt_phone.setError("Required.");
-            valid = false;
-        }else {
-            txt_phone.setError(null);
         }
 
         return valid;

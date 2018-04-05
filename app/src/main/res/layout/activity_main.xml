@@ -45,6 +45,7 @@
                 android:layout_marginTop="15dp"
                 android:background="@drawable/edittextstyle"
                 android:hint="Password" />
+
             <Button
                 android:id="@+id/btn_signin"
                 android:layout_width="wrap_content"
@@ -54,7 +55,8 @@
                 android:background="@drawable/edittextstyle"
                 android:backgroundTint="#4267B2"
                 android:text="Sign in"
-                android:textColor="#ffff"/>
+                android:textColor="#ffff"
+                android:onClick="onLoginClicked"/>
             <Button
                 android:id="@+id/forgot_password"
                 android:background="@null"
