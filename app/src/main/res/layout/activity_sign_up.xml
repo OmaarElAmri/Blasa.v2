@@ -101,19 +101,20 @@
 
                 <Button
                     android:id="@+id/btn_signup"
-                    android:layout_width="90dp"
+                    android:layout_width="120dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="50dp"
+                    android:layout_marginLeft="25dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/edittextstyle"
                     android:backgroundTint="#4267B2"
+                    android:onClick="onSignUpClicked"
                     android:text="Sign up"
                     android:textColor="#ffff" />
 
                 <Button
                     android:id="@+id/btn_clear"
-                    android:layout_width="90dp"
+                    android:layout_width="120dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="80dp"
@@ -121,6 +122,7 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/edittextstyle"
                     android:backgroundTint="#4267B2"
+                    android:onClick="onClearClicked"
                     android:text="clear"
                     android:textColor="#ffff" />
             </LinearLayout>
