@@ -67,7 +67,8 @@
                 android:layout_width="250dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dp"/>
+                android:layout_marginTop="15dp"
+                android:onClick="onforgotpassclicked"/>
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/fb_sign_in_button"
                 android:layout_width="200dp"

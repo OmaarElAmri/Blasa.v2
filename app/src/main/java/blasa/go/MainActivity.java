@@ -79,12 +79,12 @@ btn_register = (Button) findViewById(R.id.btn_register);
         if (mUser != null) {
             // User is signed in
             Intent intent = new Intent(getApplicationContext(), completesignin.class);
-            /*String uid = mAuth.getCurrentUser().getUid();
+            String uid = mAuth.getCurrentUser().getUid();
             String image=mAuth.getCurrentUser().getPhotoUrl().toString();
             intent.putExtra("user_id", uid);
             if(image!=null || image!=""){
                 intent.putExtra("profile_picture",image);
-            }*/
+            }
             startActivity(intent);
             finish();
             Log.d(TAG, "onAuthStateChanged:signed_in:" + mUser.getUid());
@@ -110,7 +110,7 @@ btn_register = (Button) findViewById(R.id.btn_register);
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         LoginButton loginButton = (LoginButton) findViewById(R.id.fb_sign_in_button);
-        //loginButton.setReadPermissions("email", "public_profile");
+        loginButton.setReadPermissions("email", "public_profile");
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -216,7 +216,7 @@ btn_register.setOnClickListener(new View.OnClickListener() {
                             Toast.makeText(MainActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         } else {
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), completesignin.class);
                             String uid = mAuth.getCurrentUser().getUid();
                             intent.putExtra("user_id", uid);
                             startActivity(intent);
@@ -296,11 +296,12 @@ btn_register.setOnClickListener(new View.OnClickListener() {
                             String image=task.getResult().getUser().getPhotoUrl().toString();
 
                             //Create a new User and Save it in Firebase database
-                            User user = new User(uid,name,null,email,null);
+                            User user = new User(uid,name,email,null,null);
 
-                            mRef.child(uid).setValue(user);
+                            mRef.child("users").child(uid).setValue(user);
 
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
+                            Intent intent = new Intent(getApplicationContext(), completesignin.class);
                             intent.putExtra("user_id",uid);
                             intent.putExtra("profile_picture",image);
                             startActivity(intent);
@@ -346,6 +347,22 @@ btn_register.setOnClickListener(new View.OnClickListener() {
 
 
 
+    public void onforgotpassclicked(View view) {
+        String email = txt_email.getText().toString();
+        mAuth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(MainActivity.this, "We have sent you an email to reset your password!", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(MainActivity.this, "Failed to send reset email!", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+    }
 
 
 
