@@ -45,15 +45,12 @@ private String g="";
         txt_username = (EditText) findViewById(R.id.txt_username);
         txt_email2 = (EditText) findViewById(R.id.txt_email2);
         txt_password2 = (EditText) findViewById(R.id.txt_password2);
-
-
-
         btn_male.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-btn_male.setImageResource(R.drawable.male_40px);
-btn_female.setVisibility(View.INVISIBLE);
-g="male";
+        btn_male.setImageResource(R.drawable.male_40px);
+        btn_female.setVisibility(View.INVISIBLE);
+        g="male";
             }
         });
 
@@ -66,9 +63,10 @@ g="male";
             }
         });
     }
-//=====================================================================================================
+
     @Override
     public void onStop() {
+
         super.onStop();
     }
 
@@ -79,20 +77,17 @@ g="male";
         user.setEmail(txt_email2.getText().toString());
         user.setPassword(txt_password2.getText().toString());
         user.setGender(g);
-
     }
-
 
     public void onClearClicked(View view){
         btn_female.setImageResource(R.drawable.female__40px);
         btn_male.setImageResource(R.drawable.male__40px);
-btn_female.setVisibility(View.VISIBLE);
-btn_male.setVisibility(View.VISIBLE);
+        btn_female.setVisibility(View.VISIBLE);
+        btn_male.setVisibility(View.VISIBLE);
         txt_username.setText("");
         txt_email2.setText("");
         txt_password2.setText("");
     }
-
 
     public void onSignUpClicked(View view) {
         createNewAccount(txt_email2.getText().toString(), txt_password2.getText().toString());
@@ -119,7 +114,8 @@ btn_male.setVisibility(View.VISIBLE);
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-
+                        Toast.makeText(sign_up.this, "User Added !",
+                                Toast.LENGTH_SHORT).show();
                         Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
                         hideProgressDialog();
 

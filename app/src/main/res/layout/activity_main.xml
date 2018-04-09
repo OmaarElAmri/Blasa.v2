@@ -10,10 +10,10 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="135dp"
+        android:layout_marginBottom="110dp"
         android:layout_marginEnd="50dp"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="135dp"
+        android:layout_marginTop="110dp"
         android:backgroundTint="#80ffffff"
         app:cardCornerRadius="15dp"
         >
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="8dp"
-            android:visibility="gone" />
+            android:visibility="gone"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -53,10 +53,10 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/edittextstyle"
-                android:backgroundTint="#4267B2"
+                android:backgroundTint="#0180E4"
+                android:onClick="onLoginClicked"
                 android:text="Sign in"
-                android:textColor="#ffff"
-                android:onClick="onLoginClicked"/>
+                android:textColor="#ffff" />
             <Button
                 android:id="@+id/forgot_password"
                 android:background="@null"
@@ -69,29 +69,42 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
                 android:onClick="onforgotpassclicked"/>
-            <com.facebook.login.widget.LoginButton
-                android:id="@+id/fb_sign_in_button"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
 
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"/>
             <Button
                 android:id="@+id/btn_register"
                 android:layout_width="250dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="10dp"
                 android:background="@null"
                 android:backgroundTint="#80ffffff"
                 android:text="new here ? register now!"
-                android:textSize="13sp"
                 android:textColor="#ffff"
-                android:textStyle="bold"/>
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:background="#0180E4"
+                android:orientation="vertical">
+
+                <com.google.android.gms.common.SignInButton
+                    android:id="@+id/sign_in_button"
+                    android:layout_width="120dp"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="85dp"
+                    android:layout_marginTop="10dp" />
+
+                <com.facebook.login.widget.LoginButton
+                    android:id="@+id/fb_sign_in_button"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="45dp"
+                    android:layout_marginRight="40dp"
+                    android:layout_marginTop="10dp" />
+            </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
-
-
 </LinearLayout>
