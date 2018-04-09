@@ -30,7 +30,7 @@
             android:name=".sign_up"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
-            android:name=".profil"
+            android:name=".home"
             android:theme="@style/Theme.AppCompat">
 
         </activity>
