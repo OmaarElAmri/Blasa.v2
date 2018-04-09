@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Blasa-v2</string>
+    <string name="app_name">blasa</string>
     <string name="facebook_application_id">1839779566322769</string>
     <string name="loading">Loading</string>
 </resources>
