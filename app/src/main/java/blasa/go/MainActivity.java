@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser mUser = mAuth.getCurrentUser();
         if (mUser != null) {
             // User is signed in
-            Intent intent = new Intent(getApplicationContext(), completesignin.class);
+            Intent intent = new Intent(getApplicationContext(), home.class);
             String uid = mAuth.getCurrentUser().getUid();
             String image=mAuth.getCurrentUser().getPhotoUrl().toString();
             intent.putExtra("user_id", uid);
@@ -347,7 +347,7 @@ btn_register.setOnClickListener(new View.OnClickListener() {
 
                             mRef.child("users").child(uid).setValue(user2);
                             Toast.makeText(MainActivity.this, "Welcome !", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getApplicationContext(), completesignin.class);
+                            Intent intent = new Intent(getApplicationContext(), home.class);
                             startActivity(intent);
                         } else {
                             // If sign in fails, display a message to the user.
