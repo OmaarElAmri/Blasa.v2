@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -61,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
     //FaceBook callbackManager
     private CallbackManager callbackManager;
     private Button btn_register,btn_signin,forgot_password,fb_sign_in_button;
-    private ProgressBar progress_bar_login;
     //a constant for detecting the login intent result
     private static final int RC_SIGN_IN = 234;
     private EditText txt_email,txt_password;
@@ -83,11 +83,10 @@ public class MainActivity extends AppCompatActivity {
             // User is signed in
             Intent intent = new Intent(getApplicationContext(), home.class);
             String uid = mAuth.getCurrentUser().getUid();
-            String image=mAuth.getCurrentUser().getPhotoUrl().toString();
+            //=======================================================
+
+            //=========================================================
             intent.putExtra("user_id", uid);
-            if(image!=null || image!=""){
-                intent.putExtra("profile_picture",image);
-            }
             startActivity(intent);
             finish();
             Log.d(TAG, "onAuthStateChanged:signed_in:" + mUser.getUid());
@@ -209,7 +208,7 @@ btn_register.setOnClickListener(new View.OnClickListener() {
                         } else {
                             Toast.makeText(MainActivity.this, "Welcome !.",
                                     Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getApplicationContext(), completesignin.class);
+                            Intent intent = new Intent(getApplicationContext(), home.class);
                             String uid = mAuth.getCurrentUser().getUid();
                             intent.putExtra("user_id", uid);
                             startActivity(intent);
@@ -288,17 +287,19 @@ btn_register.setOnClickListener(new View.OnClickListener() {
                             String uid=task.getResult().getUser().getUid();
                             String name=task.getResult().getUser().getDisplayName();
                             String email=task.getResult().getUser().getEmail();
-                            String image=task.getResult().getUser().getPhotoUrl().toString();
-
+                            //String image=task.getResult().getUser().getPhotoUrl().toString();
+                            Log.d(TAG,email);
+                            Log.d(TAG,name);
+                            //Log.d(TAG, image);
                             //Create a new User and Save it in Firebase database
                             User user = new User(uid,name,email,null,null);
 
                             mRef.child("users").child(uid).setValue(user);
 
 
-                            Intent intent = new Intent(getApplicationContext(), completesignin.class);
+                            Intent intent = new Intent(getApplicationContext(), home.class);
                             intent.putExtra("user_id",uid);
-                            intent.putExtra("profile_picture",image);
+                            //intent.putExtra("profile_picture",image);
                             startActivity(intent);
                             finish();
                         }
@@ -348,6 +349,7 @@ btn_register.setOnClickListener(new View.OnClickListener() {
                             mRef.child("users").child(uid).setValue(user2);
                             Toast.makeText(MainActivity.this, "Welcome !", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), home.class);
+                            intent.putExtra("user_id",uid);
                             startActivity(intent);
                         } else {
                             // If sign in fails, display a message to the user.
