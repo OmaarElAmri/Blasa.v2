@@ -1,9 +1,6 @@
 package blasa.go;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -44,6 +41,7 @@ public class home extends AppCompatActivity {
     private String TAG="TEST_TEST";
     private TextView name;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +53,7 @@ public class home extends AppCompatActivity {
 
 //=============================
 
-        myFirebaseRef= new Firebase("https://blasa-v2-8675.firebaseio.com/users/");
+
         mAuth = FirebaseAuth.getInstance();
         profilePicture = (ImageView) findViewById(R.id.profilePicture);
         btn_logout = (Button) findViewById(R.id.btn_logout);
@@ -132,6 +130,10 @@ try {
         super.onStop();
 
     }
+
+
+
+
 
 
 //=======================================

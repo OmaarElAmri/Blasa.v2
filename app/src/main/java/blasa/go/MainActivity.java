@@ -79,8 +79,11 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser mUser = mAuth.getCurrentUser();
+
         if (mUser != null) {
             // User is signed in
+            String x = mUser.getProviderId();
+            Log.d(TAG, "onCreate: "+ x);
             Intent intent = new Intent(getApplicationContext(), home.class);
             String uid = mAuth.getCurrentUser().getUid();
             //=======================================================
