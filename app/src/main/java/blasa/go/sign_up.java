@@ -45,6 +45,7 @@ private String g="";
         txt_username = (EditText) findViewById(R.id.txt_username);
         txt_email2 = (EditText) findViewById(R.id.txt_email2);
         txt_password2 = (EditText) findViewById(R.id.txt_password2);
+
         btn_male.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

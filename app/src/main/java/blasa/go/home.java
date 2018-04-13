@@ -1,10 +1,12 @@
 package blasa.go;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,11 +14,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
 import com.firebase.client.Firebase;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 import com.firebase.client.DataSnapshot;
@@ -40,7 +45,7 @@ public class home extends AppCompatActivity {
     private Firebase myFirebaseRef;
     private String TAG="TEST_TEST";
     private TextView name;
-
+    private AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +57,6 @@ public class home extends AppCompatActivity {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
 //=============================
-
-
         mAuth = FirebaseAuth.getInstance();
         profilePicture = (ImageView) findViewById(R.id.profilePicture);
         btn_logout = (Button) findViewById(R.id.btn_logout);
@@ -122,6 +125,25 @@ try {
         //Log.d(TAG,y);
 
 
+
+
+
+
+
+
+
+
+
+
+        /*
+        if (getIntent().getBooleanExtra("LOGOUT", false))
+        {
+            finish();
+        }
+*/
+
+
+
     }
 
 
@@ -137,6 +159,8 @@ try {
 
 
 //=======================================
+
+
 
 
 

@@ -30,11 +30,26 @@
 
     <TextView
         android:id="@+id/text_view_name"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_width="350dp"
+        android:layout_height="80dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="226dp"
-        android:text="xxx" />
+        android:gravity="top|center"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btn_delete"
+        android:layout_width="150dp"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="26dp"
+        android:background="#e50000"
+        android:text="DELETE ACCOUNT"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        />
 
 </RelativeLayout>
