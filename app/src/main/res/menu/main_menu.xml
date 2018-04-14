@@ -11,4 +11,10 @@
         android:title="Upload Photo"
 
         />
+    <item
+        android:id="@+id/pick"
+        android:icon="@drawable/ic_action_addphoto"
+        android:title="Choose Photo"
+
+        />
 </menu>

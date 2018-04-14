@@ -75,7 +75,7 @@ public class FragmentSettings extends Fragment {
 
 
 
-        
+
 //Referring to the name of the User who has logged in currently and adding a valueChangeListener
         myFirebaseRef.child(uid).child("name").addValueEventListener(new ValueEventListener() {
             //onDataChange is called every time the name of the User changes in your Firebase Database
@@ -150,6 +150,40 @@ public class FragmentSettings extends Fragment {
 
 
 
+        FabSpeedDial fabSpeedDial = (FabSpeedDial)v.findViewById(R.id.fabdial);
+        fabSpeedDial.setMenuListener(new FabSpeedDial.MenuListener() {
+            @Override
+            public boolean onPrepareMenu(NavigationMenu navigationMenu) {
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemSelected(MenuItem menuItem) {
+                if (menuItem.getTitle().equals("Log Out"))
+                {
+                    FirebaseAuth.getInstance().signOut();
+                    LoginManager.getInstance().logOut();
+                    Intent intent = new Intent(getActivity(), home.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.putExtra("LOGOUT", true);
+                    startActivity(intent);
+
+                    getActivity().finish();
+                    //Toast.makeText(v.getContext(),"log out",Toast.LENGTH_SHORT).show();
+
+                }
+                else {
+
+                }
+                return true;
+
+            }
+
+            @Override
+            public void onMenuClosed() {
+
+            }
+        });
 
 
 
