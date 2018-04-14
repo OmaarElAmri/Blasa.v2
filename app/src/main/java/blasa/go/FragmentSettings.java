@@ -6,10 +6,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.internal.NavigationMenu;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -27,6 +29,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
+
+import io.github.yavski.fabspeeddial.FabSpeedDial;
 
 /**
  * Created by omarelamri on 10/04/2018.
@@ -67,6 +71,11 @@ public class FragmentSettings extends Fragment {
 
 
         myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/");
+
+
+
+
+        
 //Referring to the name of the User who has logged in currently and adding a valueChangeListener
         myFirebaseRef.child(uid).child("name").addValueEventListener(new ValueEventListener() {
             //onDataChange is called every time the name of the User changes in your Firebase Database
@@ -87,27 +96,8 @@ public class FragmentSettings extends Fragment {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         final AlertDialog.Builder builder1 = new AlertDialog.Builder(v.getContext());
-        builder1.setMessage("Write your message here.");
+        builder1.setMessage("Do you really want to delete your account ?");
         builder1.setCancelable(true);
 
         builder1.setPositiveButton(
@@ -166,6 +156,9 @@ public class FragmentSettings extends Fragment {
 
 
 
+
+
+
 /*=============
 
         Intent intent = new Intent(getActivity(), home.class);
@@ -181,10 +174,8 @@ public class FragmentSettings extends Fragment {
 
         return v;
 
-    }
+    }}
 
 
 
 
-
-}

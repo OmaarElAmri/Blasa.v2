@@ -2,6 +2,7 @@ package blasa.go;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.internal.NavigationMenu;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -10,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,6 +35,8 @@ import com.google.firebase.auth.FirebaseUser;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import io.github.yavski.fabspeeddial.FabSpeedDial;
 
 public class home extends AppCompatActivity {
 
@@ -59,7 +63,7 @@ public class home extends AppCompatActivity {
 //=============================
         mAuth = FirebaseAuth.getInstance();
         profilePicture = (ImageView) findViewById(R.id.profilePicture);
-        btn_logout = (Button) findViewById(R.id.btn_logout);
+        //btn_logout = (Button) findViewById(R.id.btn_logout);
 
 
 
@@ -125,25 +129,10 @@ try {
         //Log.d(TAG,y);
 
 
-
-
-
-
-
-
-
-
-
-
-        /*
-        if (getIntent().getBooleanExtra("LOGOUT", false))
-        {
+//onlogout click from FragmentSettings
+        if (getIntent().getBooleanExtra("LOGOUT", false)) {
             finish();
         }
-*/
-
-
-
     }
 
 
@@ -163,14 +152,14 @@ try {
 
 
 
-
+/*
     public void onLogoutClick(View view) {
         FirebaseAuth.getInstance().signOut();
         LoginManager.getInstance().logOut();
         startActivity(new Intent(home.this, MainActivity.class));
 
     }
-
+*/
 
 
 }
