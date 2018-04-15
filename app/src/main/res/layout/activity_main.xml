@@ -16,6 +16,7 @@
         android:layout_marginTop="110dp"
         android:backgroundTint="#80ffffff"
         app:cardCornerRadius="15dp"
+        android:elevation="15dp"
         >
         <ProgressBar
             android:id="@+id/progress_bar_login"
@@ -56,7 +57,8 @@
                 android:backgroundTint="#0180E4"
                 android:onClick="onLoginClicked"
                 android:text="Sign in"
-                android:textColor="#ffff" />
+                android:textColor="#ffff"
+                android:elevation="15dp"/>
             <Button
                 android:id="@+id/forgot_password"
                 android:background="@null"
@@ -95,7 +97,8 @@
                     android:layout_width="120dp"
                     android:layout_height="45dp"
                     android:layout_marginLeft="85dp"
-                    android:layout_marginTop="10dp" />
+                    android:layout_marginTop="10dp"
+                    android:elevation="15dp"/>
 
                 <com.facebook.login.widget.LoginButton
                     android:id="@+id/fb_sign_in_button"
@@ -103,7 +106,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="45dp"
                     android:layout_marginRight="40dp"
-                    android:layout_marginTop="10dp" />
+                    android:layout_marginTop="10dp"
+                    android:elevation="15dp"/>
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>

@@ -44,7 +44,7 @@ public class home extends AppCompatActivity {
     private ViewPager viewPager;
     private ViewPagerAdapter adapter;
     private Button btn_logout;
-    private ImageView profilePicture;
+
     private FirebaseAuth mAuth;
     private Firebase myFirebaseRef;
     private String TAG="TEST_TEST";
@@ -62,7 +62,7 @@ public class home extends AppCompatActivity {
 
 //=============================
         mAuth = FirebaseAuth.getInstance();
-        profilePicture = (ImageView) findViewById(R.id.profilePicture);
+
         //btn_logout = (Button) findViewById(R.id.btn_logout);
 
 
@@ -73,15 +73,17 @@ public class home extends AppCompatActivity {
 //=============================
 
         // Add Fragment here
+        adapter.AddFragment(new FragmentSettings(), "Settings");
         adapter.AddFragment(new FragmentSearch(), "Search");
         adapter.AddFragment(new FragmentAdd(), "Add");
-        adapter.AddFragment(new FragmentSettings(), "Settings");
+
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.getTabAt(0).setIcon(R.drawable.ic_search_black_24dp);
-        tabLayout.getTabAt(1).setIcon(R.drawable.ic_directions_car_black_24dp);
-        tabLayout.getTabAt(2).setIcon(R.drawable.ic_settings_black_24dp);
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_settings_black_24dp);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_search_black_24dp);
+        tabLayout.getTabAt(2).setIcon(R.drawable.ic_add_location_24dp);
+
 
         //Remove Shadow From the action bar
         ActionBar actionBar = getSupportActionBar();
@@ -99,34 +101,15 @@ public class home extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        //name = (TextView) findViewById(R.id.text_view_name);
-        //Get the uid for the currently logged in User from intent data passed to this activity
 
-        //Log.d(TAG,mAuth.getCurrentUser().getDisplayName());
-
-
-
-
+//===============
         /*String y = getIntent().getStringExtra("user_id");
         Log.d(TAG,"user_id");
         try {
             name.setText(y);
         }catch (NullPointerException e){}*/
+// ===================
 
-        //===============
-
-
-        // ===================
-
-
-        /*String y = mAuth.getCurrentUser().getDisplayName();
-        Log.d(TAG,y);
-try {
-    name.setText(y);
-}catch (NullPointerException e){}*/
-
-//String y = myFirebaseRef.child(uid).child("name").toString();
-        //Log.d(TAG,y);
 
 
 //onlogout click from FragmentSettings

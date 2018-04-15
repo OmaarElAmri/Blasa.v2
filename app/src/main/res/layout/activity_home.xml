@@ -14,8 +14,10 @@
         android:layout_height="wrap_content"
         android:background="#0180E4"
         app:tabGravity="fill"
-        app:tabIndicatorColor="@color/colorAccent"
-        app:tabMode="fixed">
+        app:tabIndicatorColor="#e50000"
+        app:tabMode="fixed"
+        app:tabIndicatorHeight="5dp"
+        android:elevation="15dp">
 
     </android.support.design.widget.TabLayout>
 
