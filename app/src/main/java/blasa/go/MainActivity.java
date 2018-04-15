@@ -51,7 +51,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    private String x="";
     private static final String TAG = "TEST_TEST";
     public User user;
     private FirebaseAuth mAuth;
@@ -80,16 +80,17 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser mUser = mAuth.getCurrentUser();
 
+
         if (mUser != null) {
             // User is signed in
             String x = mUser.getProviderId();
             Log.d(TAG, "onCreate: "+ x);
             Intent intent = new Intent(getApplicationContext(), home.class);
-            String uid = mAuth.getCurrentUser().getUid();
+            //String uid = mAuth.getCurrentUser().getUid();
             //=======================================================
 
             //=========================================================
-            intent.putExtra("user_id", uid);
+            //intent.putExtra("user_id", uid);
             startActivity(intent);
             finish();
             Log.d(TAG, "onAuthStateChanged:signed_in:" + mUser.getUid());
@@ -212,8 +213,8 @@ btn_register.setOnClickListener(new View.OnClickListener() {
                             Toast.makeText(MainActivity.this, "Welcome !.",
                                     Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), home.class);
-                            String uid = mAuth.getCurrentUser().getUid();
-                            intent.putExtra("user_id", uid);
+                            //String uid = mAuth.getCurrentUser().getUid();
+                            //intent.putExtra("user_id", uid);
                             startActivity(intent);
                             finish();
                         }
@@ -257,6 +258,7 @@ btn_register.setOnClickListener(new View.OnClickListener() {
         mProgressDialog.show();
     }
 
+
     public void hideProgressDialog() {
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
@@ -290,10 +292,8 @@ btn_register.setOnClickListener(new View.OnClickListener() {
                             String uid=task.getResult().getUser().getUid();
                             String name=task.getResult().getUser().getDisplayName();
                             String email=task.getResult().getUser().getEmail();
-                            //String image=task.getResult().getUser().getPhotoUrl().toString();
                             Log.d(TAG,email);
                             Log.d(TAG,name);
-                            //Log.d(TAG, image);
                             //Create a new User and Save it in Firebase database
                             User user = new User(uid,name,email,null,null);
 
@@ -301,8 +301,6 @@ btn_register.setOnClickListener(new View.OnClickListener() {
 
 
                             Intent intent = new Intent(getApplicationContext(), home.class);
-                            intent.putExtra("user_id",uid);
-                            //intent.putExtra("profile_picture",image);
                             startActivity(intent);
                             finish();
                         }

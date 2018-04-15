@@ -56,30 +56,6 @@
                 android:hint="Password" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="16dp"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/btn_female"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="70dp"
-                    android:layout_marginRight="15dp"
-                    android:src="@drawable/female__40px"
-                    android:background="#ffff"/>
-
-                <ImageButton
-                    android:id="@+id/btn_male"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="30dp"
-                    android:src="@drawable/male__40px"
-                    android:background="#ffff"/>
-            </LinearLayout>
-
-            <LinearLayout
                 android:layout_width="285dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="10dp">

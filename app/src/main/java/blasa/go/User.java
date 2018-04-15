@@ -8,19 +8,22 @@ public class User {
     private String id;
     private String name;
     private String email;
+    private String photoURL;
     private String password;
-    private String gender;
+
 
     public User() {
+        this.photoURL="";
     }
 
-    public User(String id, String name, String email, String password,String gender) {
+    public User(String id, String name, String email, String password,String photoURL) {
 
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
-        this.gender = gender;
+        this.photoURL = photoURL;
+
 
     }
 
@@ -56,11 +59,7 @@ public class User {
         this.password = password;
     }
 
-   public void setGender(String gender){
-        this.gender = gender;
-   }
-    public String getGender(){
-        return gender;
-    }
+    public String getphotoURL (){return photoURL;}
 
+    public void setphotoURL (String photoURL){this.photoURL = photoURL;}
 }

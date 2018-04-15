@@ -17,7 +17,7 @@
         app:tabIndicatorColor="#e50000"
         app:tabMode="fixed"
         app:tabIndicatorHeight="5dp"
-        android:elevation="15dp">
+        android:elevation="5dp">
 
     </android.support.design.widget.TabLayout>
 

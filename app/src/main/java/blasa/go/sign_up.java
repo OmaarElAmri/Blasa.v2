@@ -22,7 +22,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class sign_up extends AppCompatActivity {
 private Button btn_signup,btn_clear ;
-private ImageButton btn_female,btn_male;
 private EditText txt_username,txt_email2,txt_password2;
 private String g="";
 
@@ -32,7 +31,6 @@ private String g="";
     private FirebaseAuth mAuth;
     private ProgressDialog mProgressDialog;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,29 +38,11 @@ private String g="";
         mAuth = FirebaseAuth.getInstance();
         btn_clear = (Button) findViewById(R.id.btn_clear);
         btn_signup = (Button) findViewById(R.id.btn_signup);
-        btn_female = (ImageButton) findViewById(R.id.btn_female);
-        btn_male = (ImageButton) findViewById(R.id.btn_male);
+
         txt_username = (EditText) findViewById(R.id.txt_username);
         txt_email2 = (EditText) findViewById(R.id.txt_email2);
         txt_password2 = (EditText) findViewById(R.id.txt_password2);
 
-        btn_male.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-        btn_male.setImageResource(R.drawable.male_40px);
-        btn_female.setVisibility(View.INVISIBLE);
-        g="male";
-            }
-        });
-
-        btn_female.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btn_female.setImageResource(R.drawable.female_40px);
-                btn_male.setVisibility(View.INVISIBLE);
-                g="female";
-            }
-        });
     }
 
     @Override
@@ -77,14 +57,9 @@ private String g="";
         user.setName(txt_username.getText().toString());
         user.setEmail(txt_email2.getText().toString());
         user.setPassword(txt_password2.getText().toString());
-        user.setGender(g);
     }
 
     public void onClearClicked(View view){
-        btn_female.setImageResource(R.drawable.female__40px);
-        btn_male.setImageResource(R.drawable.male__40px);
-        btn_female.setVisibility(View.VISIBLE);
-        btn_male.setVisibility(View.VISIBLE);
         txt_username.setText("");
         txt_email2.setText("");
         txt_password2.setText("");
@@ -138,15 +113,15 @@ private String g="";
 
     private void onAuthenticationSucess(FirebaseUser mUser) {
         // Write new user
-        saveNewUser(mUser.getUid(), user.getName(), user.getEmail(), user.getPassword(), user.getGender());
+        saveNewUser(mUser.getUid(), user.getName(), user.getEmail(), user.getPassword(), user.getphotoURL());
         signOut();
         // Go to LoginActivity
         startActivity(new Intent(sign_up.this, MainActivity.class));
         finish();
     }
 
-    private void saveNewUser(String userId, String name, String email, String password, String gender) {
-        User user = new User(userId,name,email,password,gender);
+    private void saveNewUser(String userId, String name, String email, String password, String photoURL) {
+        User user = new User(userId,name,email,password,photoURL);
 
         mRef.child("users").child(userId).setValue(user);
     }

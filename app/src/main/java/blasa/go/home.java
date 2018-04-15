@@ -6,6 +6,7 @@ import android.support.design.internal.NavigationMenu;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -50,7 +51,7 @@ public class home extends AppCompatActivity {
     private String TAG="TEST_TEST";
     private TextView name;
     private AlertDialog.Builder builder;
-
+    private SwipeRefreshLayout swipeContainer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,16 +74,18 @@ public class home extends AppCompatActivity {
 //=============================
 
         // Add Fragment here
-        adapter.AddFragment(new FragmentSettings(), "Settings");
         adapter.AddFragment(new FragmentSearch(), "Search");
         adapter.AddFragment(new FragmentAdd(), "Add");
+        adapter.AddFragment(new FragmentSettings(), "Settings");
+
+
 
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.getTabAt(0).setIcon(R.drawable.ic_settings_black_24dp);
-        tabLayout.getTabAt(1).setIcon(R.drawable.ic_search_black_24dp);
-        tabLayout.getTabAt(2).setIcon(R.drawable.ic_add_location_24dp);
+        tabLayout.getTabAt(2).setIcon(R.drawable.ic_settings_black_24dp);
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_search_black_24dp);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_add_location_24dp);
 
 
         //Remove Shadow From the action bar
@@ -116,7 +119,9 @@ public class home extends AppCompatActivity {
         if (getIntent().getBooleanExtra("LOGOUT", false)) {
             finish();
         }
+
     }
+
 
 
     @Override

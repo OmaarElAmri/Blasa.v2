@@ -13,6 +13,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.internal.NavigationMenu;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,6 +36,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.squareup.picasso.Picasso;
 
 import io.github.yavski.fabspeeddial.FabSpeedDial;
@@ -71,6 +74,7 @@ public class FragmentSettings extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.settings_fragment, container, false);
 
+
         //email = (TextView) v.findViewById(R.id.text_view_name1);
         profilePicture = (ImageView) v.findViewById(R.id.profilePicture);
         delete = (Button) v.findViewById(R.id.btn_delete);
@@ -80,6 +84,10 @@ public class FragmentSettings extends Fragment {
 //Get the uid for the currently logged in User from intent data passed to this activity
         String uid = mAuth.getCurrentUser().getUid();
 
+//update database====================================================================================
+        Firebase firebase = new Firebase("https://blasa-v2-8675.firebaseio.com/users/");
+        firebase.child(uid).child("photoURL").setValue("newValue");
+//====================================================================================================
 
         myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/");
 
@@ -94,6 +102,7 @@ public class FragmentSettings extends Fragment {
 //getValue returns an Object. We can specify the type by passing the type expected as a parameter
                 String data = dataSnapshot.getValue(String.class);
                 name.setText(data);
+
             }
 
             //onCancelled is called in case of any error
@@ -196,15 +205,6 @@ public class FragmentSettings extends Fragment {
             }
         });
 //===================================================================================================
-
-
-
-
-
-
-
-
-
 
 
 
