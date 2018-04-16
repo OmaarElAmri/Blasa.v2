@@ -57,6 +57,7 @@ private String g="";
         user.setName(txt_username.getText().toString());
         user.setEmail(txt_email2.getText().toString());
         user.setPassword(txt_password2.getText().toString());
+        user.setphotoURL("https://image.ibb.co/bGbM6n/centos_users_and_groups.jpg");
     }
 
     public void onClearClicked(View view){

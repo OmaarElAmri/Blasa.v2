@@ -51,6 +51,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class MainActivity extends AppCompatActivity {
 
+    String y = "https://image.ibb.co/bGbM6n/centos_users_and_groups.jpg";
     private String x="";
     private static final String TAG = "TEST_TEST";
     public User user;
@@ -294,8 +295,9 @@ btn_register.setOnClickListener(new View.OnClickListener() {
                             String email=task.getResult().getUser().getEmail();
                             Log.d(TAG,email);
                             Log.d(TAG,name);
+
                             //Create a new User and Save it in Firebase database
-                            User user = new User(uid,name,email,null,null);
+                            User user = new User(uid,name,email,null,y);
 
                             mRef.child("users").child(uid).setValue(user);
 
@@ -345,7 +347,7 @@ btn_register.setOnClickListener(new View.OnClickListener() {
                             String uid = user.getUid();
                             String name = user.getDisplayName() ;
                             String email=user.getEmail();
-                            User user2 = new User(uid,name,email,null,null);
+                            User user2 = new User(uid,name,email,null,y);
 
                             mRef.child("users").child(uid).setValue(user2);
                             Toast.makeText(MainActivity.this, "Welcome !", Toast.LENGTH_SHORT).show();

@@ -6,11 +6,11 @@
 
     <ImageView
         android:id="@+id/profilePicture"
-        android:layout_width="220dp"
-        android:layout_height="220dp"
+        android:layout_width="285dp"
+        android:layout_height="283dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="49dp"
+        android:layout_marginTop="81dp"
         android:scaleType="centerInside"
         android:src="@drawable/icon" />
 
@@ -47,7 +47,7 @@
         android:layout_marginRight="15dp"
         app:borderWidth="0dp"
         app:rippleColor="@color/colorPrimary"/>
-    -->
+
     <TextView
         android:id="@+id/text_view_name"
         android:layout_width="325dp"
@@ -58,20 +58,34 @@
         android:textColor="@color/colorPrimaryDark"
         android:textSize="20sp"
         android:textStyle="bold" />
+    -->
+    <Button
+        android:id="@+id/btn_delete"
+        android:layout_width="150dp"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="26dp"
+        android:background="@null"
+        android:elevation="15dp"
+        android:text="DELETE ACCOUNT"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="12sp"
+        android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btn_delete"
-            android:layout_width="150dp"
-            android:layout_height="30dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="26dp"
-            android:background="#e50000"
-            android:text="DELETE ACCOUNT"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:elevation="15dp"
-            />
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="name "
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
-
-    </RelativeLayout>
+</RelativeLayout>

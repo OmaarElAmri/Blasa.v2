@@ -1,5 +1,6 @@
 package blasa.go;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.internal.NavigationMenu;
@@ -45,7 +46,7 @@ public class home extends AppCompatActivity {
     private ViewPager viewPager;
     private ViewPagerAdapter adapter;
     private Button btn_logout;
-
+    private Button delete;
     private FirebaseAuth mAuth;
     private Firebase myFirebaseRef;
     private String TAG="TEST_TEST";
@@ -59,7 +60,7 @@ public class home extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tablayout_id);
         viewPager = (ViewPager) findViewById(R.id.viewpager_id);
-        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+
 
 //=============================
         mAuth = FirebaseAuth.getInstance();
@@ -72,13 +73,11 @@ public class home extends AppCompatActivity {
 
 
 //=============================
-
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
         // Add Fragment here
         adapter.AddFragment(new FragmentSearch(), "Search");
         adapter.AddFragment(new FragmentAdd(), "Add");
         adapter.AddFragment(new FragmentSettings(), "Settings");
-
-
 
 
         viewPager.setAdapter(adapter);
@@ -91,6 +90,7 @@ public class home extends AppCompatActivity {
         //Remove Shadow From the action bar
         ActionBar actionBar = getSupportActionBar();
         actionBar.setElevation(0);
+        contextOfApplication = getApplicationContext();
     }
 
 
@@ -148,7 +148,12 @@ public class home extends AppCompatActivity {
 
     }
 */
-
+// a static variable to get a reference of our application context
+public static Context contextOfApplication;
+    public static Context getContextOfApplication()
+    {
+        return contextOfApplication;
+    }
 
 }
 

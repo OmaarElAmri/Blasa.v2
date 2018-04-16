@@ -10,10 +10,10 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="135dp"
+        android:layout_marginBottom="170dp"
         android:layout_marginEnd="50dp"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="135dp"
+        android:layout_marginTop="170dp"
         android:backgroundTint="#80ffffff"
         app:cardCornerRadius="15dp"
         android:elevation="15dp"
@@ -58,7 +58,7 @@
             <LinearLayout
                 android:layout_width="285dp"
                 android:layout_height="100dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="20dp">
 
                 <Button
                     android:id="@+id/btn_signup"
