@@ -17,7 +17,6 @@ import com.firebase.client.ValueEventListener;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class completesignin extends AppCompatActivity {
-private Button button2;
 String TAG = "TEST_TEST";
     private Firebase myFirebaseRef;
     private FirebaseAuth mAuth;

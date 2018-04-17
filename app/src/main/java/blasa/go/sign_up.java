@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
@@ -23,7 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class sign_up extends AppCompatActivity {
 private Button btn_signup,btn_clear ;
 private EditText txt_username,txt_email2,txt_password2;
-private String g="";
+
 
     private static final String TAG = "TEST_TEST";
     private Firebase mRef = new Firebase("https://blasa-v2-8675.firebaseio.com/");
@@ -38,7 +37,6 @@ private String g="";
         mAuth = FirebaseAuth.getInstance();
         btn_clear = (Button) findViewById(R.id.btn_clear);
         btn_signup = (Button) findViewById(R.id.btn_signup);
-
         txt_username = (EditText) findViewById(R.id.txt_username);
         txt_email2 = (EditText) findViewById(R.id.txt_email2);
         txt_password2 = (EditText) findViewById(R.id.txt_password2);

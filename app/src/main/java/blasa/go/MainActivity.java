@@ -1,25 +1,15 @@
 package blasa.go;
 
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.app.ProgressDialog;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -29,11 +19,13 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.firebase.auth.AuthCredential;
 import com.firebase.client.Firebase;
@@ -45,23 +37,28 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.UserInfo;
+import com.squareup.picasso.Picasso;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class MainActivity extends AppCompatActivity {
+import static android.provider.SyncStateContract.Helpers.update;
 
+public class MainActivity extends AppCompatActivity {
+String x;
     String y = "https://image.ibb.co/bGbM6n/centos_users_and_groups.jpg";
-    private String x="";
     private static final String TAG = "TEST_TEST";
     public User user;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private ProgressDialog mProgressDialog;
+    private Firebase myFirebaseRef;
     //Add YOUR Firebase Reference URL instead of the following URL
-    Firebase mRef=new Firebase("https://blasa-v2-8675.firebaseio.com/");
+    Firebase mRef=new Firebase("https://blasa-v2-8675.firebaseio.com/users/");
     //FaceBook callbackManager
     private CallbackManager callbackManager;
+    private String PROVIDER_ID;
     private Button btn_register,btn_signin,forgot_password,fb_sign_in_button;
     //a constant for detecting the login intent result
     private static final int RC_SIGN_IN = 234;
@@ -84,14 +81,10 @@ public class MainActivity extends AppCompatActivity {
 
         if (mUser != null) {
             // User is signed in
-            String x = mUser.getProviderId();
-            Log.d(TAG, "onCreate: "+ x);
-            Intent intent = new Intent(getApplicationContext(), home.class);
-            //String uid = mAuth.getCurrentUser().getUid();
-            //=======================================================
 
-            //=========================================================
-            //intent.putExtra("user_id", uid);
+            PROVIDER_ID = mUser.getProviders().get(0);
+            //Log.d(TAG, "provider =  "+ PROVIDER_ID);
+            Intent intent = new Intent(getApplicationContext(), home.class);
             startActivity(intent);
             finish();
             Log.d(TAG, "onAuthStateChanged:signed_in:" + mUser.getUid());
@@ -211,13 +204,20 @@ btn_register.setOnClickListener(new View.OnClickListener() {
                             Toast.makeText(MainActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         } else {
+                            if (mAuth.getCurrentUser() != null) {
+                                Intent intent = new Intent(getApplicationContext(), home.class);
+                                startActivity(intent);
+                                Toast.makeText(MainActivity.this, "Welcome !", Toast.LENGTH_SHORT).show();
+                                finish();
+                                Log.d(TAG, "onAuthStateChanged:signed_in:" + mAuth.getCurrentUser().getUid());
+
+                            } else {
+
                             Toast.makeText(MainActivity.this, "Welcome !.",
                                     Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), home.class);
-                            //String uid = mAuth.getCurrentUser().getUid();
-                            //intent.putExtra("user_id", uid);
                             startActivity(intent);
-                            finish();
+                            finish();}
                         }
 
                         hideProgressDialog();
@@ -287,6 +287,14 @@ btn_register.setOnClickListener(new View.OnClickListener() {
                             Toast.makeText(MainActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }else{
+                            if (mAuth.getCurrentUser() != null) {
+                                Intent intent = new Intent(getApplicationContext(), home.class);
+                                startActivity(intent);
+                                Toast.makeText(MainActivity.this, "Welcome !", Toast.LENGTH_SHORT).show();
+                                finish();
+                                Log.d(TAG, "onAuthStateChanged:signed_in:" + mAuth.getCurrentUser().getUid());
+
+                            } else {
 
                             Toast.makeText(MainActivity.this, "Welcome !",
                                     Toast.LENGTH_SHORT).show();
@@ -299,12 +307,12 @@ btn_register.setOnClickListener(new View.OnClickListener() {
                             //Create a new User and Save it in Firebase database
                             User user = new User(uid,name,email,null,y);
 
-                            mRef.child("users").child(uid).setValue(user);
+                            mRef.child("facebook").child(uid).setValue(user);
 
 
                             Intent intent = new Intent(getApplicationContext(), home.class);
                             startActivity(intent);
-                            finish();
+                            finish();}
                         }
 
                         hideProgressDialog();
@@ -333,6 +341,7 @@ btn_register.setOnClickListener(new View.OnClickListener() {
 
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        showProgressDialog();
         Log.d("TEST_TEST", "firebaseAuthWithGoogle:" + acct.getId());
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
@@ -343,17 +352,28 @@ btn_register.setOnClickListener(new View.OnClickListener() {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            String uid = user.getUid();
+                            final FirebaseUser user = mAuth.getCurrentUser();
+                            final String uid = user.getUid();
                             String name = user.getDisplayName() ;
                             String email=user.getEmail();
-                            User user2 = new User(uid,name,email,null,y);
 
-                            mRef.child("users").child(uid).setValue(user2);
-                            Toast.makeText(MainActivity.this, "Welcome !", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getApplicationContext(), home.class);
-                            intent.putExtra("user_id",uid);
-                            startActivity(intent);
+                            if (mAuth.getCurrentUser() != null) {
+                                Intent intent = new Intent(getApplicationContext(), home.class);
+                                startActivity(intent);
+                                Toast.makeText(MainActivity.this, "Welcome !", Toast.LENGTH_SHORT).show();
+                                finish();
+                                Log.d(TAG, "onAuthStateChanged:signed_in:" + mAuth.getCurrentUser().getUid());
+                            } else {
+                                User user2 = new User(uid, name, email, null, y);
+
+                                mRef.child("google").child(uid).setValue(user2);
+
+                                Toast.makeText(MainActivity.this, "Welcome !", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getApplicationContext(), home.class);
+                                startActivity(intent);
+                            }
+
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("TEST_TEST", "signInWithCredential:failure", task.getException());
@@ -362,7 +382,7 @@ btn_register.setOnClickListener(new View.OnClickListener() {
 
                         }
 
-
+                        hideProgressDialog();
                     }
                 });
     }
@@ -374,6 +394,7 @@ btn_register.setOnClickListener(new View.OnClickListener() {
 
 //======================================================================google sign in ======================================================================
     public void onforgotpassclicked(View view) {
+        showProgressDialog();
         String userEmail = txt_email.getText().toString();
         if (TextUtils.isEmpty(userEmail)) {
             txt_email.setError("Required.");}
@@ -390,7 +411,7 @@ btn_register.setOnClickListener(new View.OnClickListener() {
                                 txt_email.setError("Required.");
                             Toast.makeText(MainActivity.this, "Failed to send reset email!", Toast.LENGTH_SHORT).show();
                         }}
-
+                        hideProgressDialog();
                     }
                 });
 

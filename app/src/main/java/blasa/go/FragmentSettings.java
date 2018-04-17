@@ -1,5 +1,6 @@
 package blasa.go;
 
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,25 +8,17 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.renderscript.Allocation;
-import android.renderscript.Element;
 import android.renderscript.RenderScript;
-import android.renderscript.ScriptIntrinsicBlur;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.internal.NavigationMenu;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
-import android.text.style.UpdateLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
@@ -45,7 +38,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -63,26 +55,19 @@ import static android.app.Activity.RESULT_OK;
 
 public class FragmentSettings extends Fragment {
     View v;
-
+    private String prov;
     private static final String TAG = "TEST_TEST";
     private Firebase myFirebaseRef;
     private FirebaseAuth mAuth;
     private TextView name;
-    private String providerId;
-    //private TextView email;
     private EditText name2;
     private Button delete;
-    private AlertDialog.Builder builder;
     private ImageView profilePicture;
     private Uri mImageUri;
-    private RenderScript mRS;
-    private Bitmap inputBitmap;
-    private Bitmap outputBitmap;
     private StorageReference mStorageRef;
-    private ProgressBar mProgressBar;
-private ContentResolver cR;
     private StorageTask mUploadTask;
-
+    private String PROVIDER_ID;
+    private ProgressDialog mProgressDialog;
     private static final int PICK_IMAGE_REQUEST = 1;
 
     public FragmentSettings() {
@@ -92,10 +77,11 @@ private ContentResolver cR;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.settings_fragment, container, false);
-        myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/");
+        //myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/");
+        //myFirebaseRef1 = new Firebase("https://blasa-v2-8675.firebaseio.com/users/facebook/");
+        //myFirebaseRef2 = new Firebase("https://blasa-v2-8675.firebaseio.com/users/google/");
+        name2 = (EditText) v.findViewById(R.id.name);
 
-name2 = (EditText) v.findViewById(R.id.name);
-        //email = (TextView) v.findViewById(R.id.text_view_name1);
         profilePicture = (ImageView) v.findViewById(R.id.profilePicture);
         delete = (Button) v.findViewById(R.id.btn_delete);
         name = (TextView) v.findViewById(R.id.text_view_name);
@@ -108,13 +94,133 @@ name2 = (EditText) v.findViewById(R.id.name);
       /*  Firebase firebase = new Firebase("https://blasa-v2-8675.firebaseio.com/users/");
         firebase.child(uid).child("photoURL").setValue("newValue");*/
 //==================================================================================================
-// ======================================================================================================
-//photo upload
+//photos folder creation
         mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
+//display user's information based on auth provider
+        PROVIDER_ID = mUser.getProviders().get(0);
 
+            if (PROVIDER_ID.equals("password")) {
+                Log.d(TAG, "provider = "+ PROVIDER_ID);
+                myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/");
+//name
+                myFirebaseRef.child(uid).child("name").addValueEventListener(new ValueEventListener() {
+                    //onDataChange is called every time the name of the User changes in your Firebase Database
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+//Inside onDataChange we can get the data as an Object from the dataSnapshot
+//getValue returns an Object. We can specify the type by passing the type expected as a parameter
+                        String data = dataSnapshot.getValue(String.class);
+                        name2.setText(data);
+                        name2.setEnabled(false);
+                    }
 
-//======================================================================================================
+                    //onCancelled is called in case of any error
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+                        Toast.makeText(v.getContext(), "" + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
 
+//photo
+                myFirebaseRef.child(uid).child("photoURL").addValueEventListener(new ValueEventListener() {
+                    //onDataChange is called every time the name of the User changes in your Firebase Database
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+//Inside onDataChange we can get the data as an Object from the dataSnapshot
+//getValue returns an Object. We can specify the type by passing the type expected as a parameter
+                        String data = dataSnapshot.getValue(String.class);
+                        Picasso.get().load(data).into(profilePicture);
+
+                    }
+
+                    //onCancelled is called in case of any error
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+                        Toast.makeText(v.getContext(), "" + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
+            } else if (PROVIDER_ID.equals("facebook.com")){
+                Log.d(TAG, "provider = "+ PROVIDER_ID);
+                myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/facebook/");
+                myFirebaseRef.child(uid).child("name").addValueEventListener(new ValueEventListener() {
+                    //onDataChange is called every time the name of the User changes in your Firebase Database
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+//Inside onDataChange we can get the data as an Object from the dataSnapshot
+//getValue returns an Object. We can specify the type by passing the type expected as a parameter
+                        String data = dataSnapshot.getValue(String.class);
+                        //name.setText(data);
+                        name2.setText(data);
+                        name2.setEnabled(false);
+                    }
+
+                    //onCancelled is called in case of any error
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+                        Toast.makeText(v.getContext(), "" + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+//photo
+                myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/facebook/");
+                myFirebaseRef.child(uid).child("photoURL").addValueEventListener(new ValueEventListener() {
+                    //onDataChange is called every time the name of the User changes in your Firebase Database
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+//Inside onDataChange we can get the data as an Object from the dataSnapshot
+//getValue returns an Object. We can specify the type by passing the type expected as a parameter
+                        String data = dataSnapshot.getValue(String.class);
+                        Picasso.get().load(data).into(profilePicture);
+                    }
+
+                    //onCancelled is called in case of any error
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+                        Toast.makeText(v.getContext(), "" + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+            else if (PROVIDER_ID.equals("google.com"))
+            {  Log.d(TAG, "provider = "+ PROVIDER_ID);
+                myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/google/");
+//name
+                myFirebaseRef.child(uid).child("name").addValueEventListener(new ValueEventListener() {
+                //onDataChange is called every time the name of the User changes in your Firebase Database
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+//Inside onDataChange we can get the data as an Object from the dataSnapshot
+//getValue returns an Object. We can specify the type by passing the type expected as a parameter
+                    String data = dataSnapshot.getValue(String.class);
+                    //name.setText(data);
+                    name2.setText(data);
+                    name2.setEnabled(false);
+                }
+
+                //onCancelled is called in case of any error
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+                    Toast.makeText(v.getContext(), "" + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+//photo
+                myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/google/");
+                myFirebaseRef.child(uid).child("photoURL").addValueEventListener(new ValueEventListener() {
+                    //onDataChange is called every time the name of the User changes in your Firebase Database
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+//Inside onDataChange we can get the data as an Object from the dataSnapshot
+//getValue returns an Object. We can specify the type by passing the type expected as a parameter
+                        String data = dataSnapshot.getValue(String.class);
+                        Picasso.get().load(data).into(profilePicture);
+                    }
+
+                    //onCancelled is called in case of any error
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+                        Toast.makeText(v.getContext(), "" + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+               }
 
 
 
@@ -133,7 +239,7 @@ name2 = (EditText) v.findViewById(R.id.name);
 //fetching username
 
 //Referring to the name of the User who has logged in currently and adding a valueChangeListener
-        myFirebaseRef.child(uid).child("name").addValueEventListener(new ValueEventListener() {
+  /*      myFirebaseRef.child(uid).child("name").addValueEventListener(new ValueEventListener() {
             //onDataChange is called every time the name of the User changes in your Firebase Database
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -151,7 +257,7 @@ name2.setText(data);
                 Toast.makeText(v.getContext(), "" + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-
+*/
 //AlterDialog
 
         final AlertDialog.Builder builder1 = new AlertDialog.Builder(v.getContext());
@@ -250,7 +356,7 @@ name2.setText(data);
             }
         });
 //===================================================================================================
-
+/*
         myFirebaseRef.child(uid).child("photoURL").addValueEventListener(new ValueEventListener() {
             //onDataChange is called every time the name of the User changes in your Firebase Database
             @Override
@@ -270,7 +376,7 @@ name2.setText(data);
 
 
 
-
+*/
 
 
 
@@ -330,11 +436,31 @@ name2.setText(data);
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                            Toast.makeText(v.getContext(), "Upload successful", Toast.LENGTH_LONG).show();
-                               String x = taskSnapshot.getDownloadUrl().toString();
-                               Firebase firebase = new Firebase("https://blasa-v2-8675.firebaseio.com/users/");
-                               String uid = mAuth.getCurrentUser().getUid();
-                               firebase.child(uid).child("photoURL").setValue(x);
+                            PROVIDER_ID = mAuth.getCurrentUser().getProviders().get(0);
+                            if (PROVIDER_ID.equals("password")) {
+                                Toast.makeText(v.getContext(), "Upload successful", Toast.LENGTH_LONG).show();
+                                String x = taskSnapshot.getDownloadUrl().toString();
+                                Firebase firebase = new Firebase("https://blasa-v2-8675.firebaseio.com/users/");
+                                String uid = mAuth.getCurrentUser().getUid();
+                                firebase.child(uid).child("photoURL").setValue(x);
+                            } else if (PROVIDER_ID.equals("facebook.com")) {
+                                Toast.makeText(v.getContext(), "Upload successful", Toast.LENGTH_LONG).show();
+                                String x = taskSnapshot.getDownloadUrl().toString();
+                                Firebase firebase = new Firebase("https://blasa-v2-8675.firebaseio.com/users/facebook/");
+                                String uid = mAuth.getCurrentUser().getUid();
+                                firebase.child(uid).child("photoURL").setValue(x);
+
+
+                            }
+                            else if (PROVIDER_ID.equals("google.com"))
+                            {
+                                Toast.makeText(v.getContext(), "Upload successful", Toast.LENGTH_LONG).show();
+                                String x = taskSnapshot.getDownloadUrl().toString();
+                                Firebase firebase = new Firebase("https://blasa-v2-8675.firebaseio.com/users/google/");
+                                String uid = mAuth.getCurrentUser().getUid();
+                                firebase.child(uid).child("photoURL").setValue(x);
+                            }
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -355,6 +481,21 @@ name2.setText(data);
     }
 //===================================================================================================
 
+    public void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(v.getContext());
+            mProgressDialog.setMessage(getString(R.string.loading));
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
+    }
+
+    public void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
+    }
 }
 
 
