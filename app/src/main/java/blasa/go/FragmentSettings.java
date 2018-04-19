@@ -3,9 +3,7 @@ package blasa.go;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.renderscript.RenderScript;
@@ -13,17 +11,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.internal.NavigationMenu;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,19 +50,17 @@ import static android.app.Activity.RESULT_OK;
 
 public class FragmentSettings extends Fragment {
     View v;
-    private String prov;
     private static final String TAG = "TEST_TEST";
     private Firebase myFirebaseRef;
     private FirebaseAuth mAuth;
     private TextView name;
     private EditText name2;
-    private Button delete;
     private ImageView profilePicture;
     private Uri mImageUri;
     private StorageReference mStorageRef;
     private StorageTask mUploadTask;
     private String PROVIDER_ID;
-    private ProgressDialog mProgressDialog;
+    private ProgressDialog progressDialog ;
     private static final int PICK_IMAGE_REQUEST = 1;
 
     public FragmentSettings() {
@@ -77,13 +70,10 @@ public class FragmentSettings extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.settings_fragment, container, false);
-        //myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/");
-        //myFirebaseRef1 = new Firebase("https://blasa-v2-8675.firebaseio.com/users/facebook/");
-        //myFirebaseRef2 = new Firebase("https://blasa-v2-8675.firebaseio.com/users/google/");
-        name2 = (EditText) v.findViewById(R.id.name);
 
+        progressDialog = new ProgressDialog(v.getContext());
+        name2 = (EditText) v.findViewById(R.id.name);
         profilePicture = (ImageView) v.findViewById(R.id.profilePicture);
-        delete = (Button) v.findViewById(R.id.btn_delete);
         name = (TextView) v.findViewById(R.id.text_view_name);
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser mUser = mAuth.getCurrentUser();
@@ -93,98 +83,64 @@ public class FragmentSettings extends Fragment {
 //update database====================================================================================
       /*  Firebase firebase = new Firebase("https://blasa-v2-8675.firebaseio.com/users/");
         firebase.child(uid).child("photoURL").setValue("newValue");*/
+
+ //update       mDatabase.child("users").child(userId).child("username").setValue(name);
+
+        /*Delete data
+The simplest way to delete data is to call removeValue() on a reference to the location of that data.
+
+You can also delete by specifying null as the value for another write operation such as setValue() or updateChildren(). You can use this technique with updateChildren() to delete multiple children in a single API call.*/
 //==================================================================================================
 //photos folder creation
         mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
 //display user's information based on auth provider
         PROVIDER_ID = mUser.getProviders().get(0);
 
-            if (PROVIDER_ID.equals("password")) {
-                Log.d(TAG, "provider = "+ PROVIDER_ID);
-                myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/");
+        if (PROVIDER_ID.equals("password")) {
+            Log.d(TAG, "provider = "+ PROVIDER_ID);
+            myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/");
 //name
-                myFirebaseRef.child(uid).child("name").addValueEventListener(new ValueEventListener() {
-                    //onDataChange is called every time the name of the User changes in your Firebase Database
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+            myFirebaseRef.child(uid).child("name").addValueEventListener(new ValueEventListener() {
+                //onDataChange is called every time the name of the User changes in your Firebase Database
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 //Inside onDataChange we can get the data as an Object from the dataSnapshot
 //getValue returns an Object. We can specify the type by passing the type expected as a parameter
-                        String data = dataSnapshot.getValue(String.class);
-                        name2.setText(data);
-                        name2.setEnabled(false);
-                    }
+                    String data = dataSnapshot.getValue(String.class);
+                    name2.setText(data);
+                    name2.setEnabled(false);
+                }
 
-                    //onCancelled is called in case of any error
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) {
-                        Toast.makeText(v.getContext(), "" + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
+                //onCancelled is called in case of any error
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+                    Toast.makeText(v.getContext(), "" + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
 
 //photo
-                myFirebaseRef.child(uid).child("photoURL").addValueEventListener(new ValueEventListener() {
-                    //onDataChange is called every time the name of the User changes in your Firebase Database
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+            myFirebaseRef.child(uid).child("photoURL").addValueEventListener(new ValueEventListener() {
+                //onDataChange is called every time the name of the User changes in your Firebase Database
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 //Inside onDataChange we can get the data as an Object from the dataSnapshot
 //getValue returns an Object. We can specify the type by passing the type expected as a parameter
-                        String data = dataSnapshot.getValue(String.class);
-                        Picasso.get().load(data).into(profilePicture);
+                    String data = dataSnapshot.getValue(String.class);
+                    Picasso.get().load(data).into(profilePicture);
 
-                    }
+                }
 
-                    //onCancelled is called in case of any error
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) {
-                        Toast.makeText(v.getContext(), "" + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
+                //onCancelled is called in case of any error
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+                    Toast.makeText(v.getContext(), "" + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
 
-            } else if (PROVIDER_ID.equals("facebook.com")){
-                Log.d(TAG, "provider = "+ PROVIDER_ID);
-                myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/facebook/");
-                myFirebaseRef.child(uid).child("name").addValueEventListener(new ValueEventListener() {
-                    //onDataChange is called every time the name of the User changes in your Firebase Database
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-//Inside onDataChange we can get the data as an Object from the dataSnapshot
-//getValue returns an Object. We can specify the type by passing the type expected as a parameter
-                        String data = dataSnapshot.getValue(String.class);
-                        //name.setText(data);
-                        name2.setText(data);
-                        name2.setEnabled(false);
-                    }
-
-                    //onCancelled is called in case of any error
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) {
-                        Toast.makeText(v.getContext(), "" + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
-//photo
-                myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/facebook/");
-                myFirebaseRef.child(uid).child("photoURL").addValueEventListener(new ValueEventListener() {
-                    //onDataChange is called every time the name of the User changes in your Firebase Database
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-//Inside onDataChange we can get the data as an Object from the dataSnapshot
-//getValue returns an Object. We can specify the type by passing the type expected as a parameter
-                        String data = dataSnapshot.getValue(String.class);
-                        Picasso.get().load(data).into(profilePicture);
-                    }
-
-                    //onCancelled is called in case of any error
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) {
-                        Toast.makeText(v.getContext(), "" + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-            else if (PROVIDER_ID.equals("google.com"))
-            {  Log.d(TAG, "provider = "+ PROVIDER_ID);
-                myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/google/");
-//name
-                myFirebaseRef.child(uid).child("name").addValueEventListener(new ValueEventListener() {
+        } else if (PROVIDER_ID.equals("facebook.com")){
+            Log.d(TAG, "provider = "+ PROVIDER_ID);
+            myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/facebook/");
+            myFirebaseRef.child(uid).child("name").addValueEventListener(new ValueEventListener() {
                 //onDataChange is called every time the name of the User changes in your Firebase Database
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -203,113 +159,66 @@ public class FragmentSettings extends Fragment {
                 }
             });
 //photo
-                myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/google/");
-                myFirebaseRef.child(uid).child("photoURL").addValueEventListener(new ValueEventListener() {
-                    //onDataChange is called every time the name of the User changes in your Firebase Database
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+            myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/facebook/");
+            myFirebaseRef.child(uid).child("photoURL").addValueEventListener(new ValueEventListener() {
+                //onDataChange is called every time the name of the User changes in your Firebase Database
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 //Inside onDataChange we can get the data as an Object from the dataSnapshot
 //getValue returns an Object. We can specify the type by passing the type expected as a parameter
-                        String data = dataSnapshot.getValue(String.class);
-                        Picasso.get().load(data).into(profilePicture);
-                    }
+                    String data = dataSnapshot.getValue(String.class);
+                    Picasso.get().load(data).into(profilePicture);
+                }
 
-                    //onCancelled is called in case of any error
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) {
-                        Toast.makeText(v.getContext(), "" + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
-               }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//fetching username
-
-//Referring to the name of the User who has logged in currently and adding a valueChangeListener
-  /*      myFirebaseRef.child(uid).child("name").addValueEventListener(new ValueEventListener() {
-            //onDataChange is called every time the name of the User changes in your Firebase Database
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+                //onCancelled is called in case of any error
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+                    Toast.makeText(v.getContext(), "" + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+        else if (PROVIDER_ID.equals("google.com"))
+        {  Log.d(TAG, "provider = "+ PROVIDER_ID);
+            myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/google/");
+//name
+            myFirebaseRef.child(uid).child("name").addValueEventListener(new ValueEventListener() {
+                //onDataChange is called every time the name of the User changes in your Firebase Database
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 //Inside onDataChange we can get the data as an Object from the dataSnapshot
 //getValue returns an Object. We can specify the type by passing the type expected as a parameter
-                String data = dataSnapshot.getValue(String.class);
-                //name.setText(data);
-name2.setText(data);
-                name2.setEnabled(false);
-            }
+                    String data = dataSnapshot.getValue(String.class);
+                    //name.setText(data);
+                    name2.setText(data);
+                    name2.setEnabled(false);
+                }
 
-            //onCancelled is called in case of any error
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                Toast.makeText(v.getContext(), "" + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-*/
-//AlterDialog
+                //onCancelled is called in case of any error
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+                    Toast.makeText(v.getContext(), "" + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+//photo
+            myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/google/");
+            myFirebaseRef.child(uid).child("photoURL").addValueEventListener(new ValueEventListener() {
+                //onDataChange is called every time the name of the User changes in your Firebase Database
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+//Inside onDataChange we can get the data as an Object from the dataSnapshot
+//getValue returns an Object. We can specify the type by passing the type expected as a parameter
+                    String data = dataSnapshot.getValue(String.class);
+                    Picasso.get().load(data).into(profilePicture);
+                }
 
-        final AlertDialog.Builder builder1 = new AlertDialog.Builder(v.getContext());
-        builder1.setMessage("Do you really want to delete your account ?");
-        builder1.setCancelable(true);
+                //onCancelled is called in case of any error
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+                    Toast.makeText(v.getContext(), "" + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+        }
 
-        builder1.setPositiveButton(
-                "Yes",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        mUser.delete()
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-
-
-                                            Log.d(TAG, "onComplete: account deleted ");
-                                            FirebaseAuth.getInstance().signOut();
-                                            LoginManager.getInstance().logOut();
-                                            getActivity().finish();
-
-                                        } else {
-
-
-                                        }
-                                    }
-                                });
-                        //dialog.cancel();
-                    }
-                });
-
-
-        builder1.setNegativeButton(
-                "No",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-
-
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: gg");
-
-                AlertDialog alert11 = builder1.create();
-                alert11.show();
-
-            }
-        });
 
 //FabSpeedDial
 
@@ -319,7 +228,7 @@ name2.setText(data);
             public boolean onPrepareMenu(NavigationMenu navigationMenu) {
 
                 return true;
-                
+
             }
 
             @Override
@@ -338,16 +247,14 @@ name2.setText(data);
                 } else if (menuItem.getTitle().equals("Choose Photo")) {
                     openFileChooser();
                 } else {
-             /*crash*/       if (mUploadTask != null && mUploadTask.isInProgress()) {
-                    Toast.makeText(v.getContext(), "Upload in progress", Toast.LENGTH_SHORT).show();
-                } else {
-                    UploadPhoto();
-                }
+                    /*crash*/       if (mUploadTask != null && mUploadTask.isInProgress()) {
+                        Toast.makeText(v.getContext(), "Upload in progress", Toast.LENGTH_SHORT).show();
+                    } else {
+                        UploadPhoto();
+                    }
 
                 }
-
                 return true;
-
             }
 
             @Override
@@ -355,29 +262,6 @@ name2.setText(data);
 
             }
         });
-//===================================================================================================
-/*
-        myFirebaseRef.child(uid).child("photoURL").addValueEventListener(new ValueEventListener() {
-            //onDataChange is called every time the name of the User changes in your Firebase Database
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-//Inside onDataChange we can get the data as an Object from the dataSnapshot
-//getValue returns an Object. We can specify the type by passing the type expected as a parameter
-                String data = dataSnapshot.getValue(String.class);
-                Picasso.get().load(data).into(profilePicture);
-            }
-
-            //onCancelled is called in case of any error
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                Toast.makeText(v.getContext(), "" + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-
-
-
-*/
-
 
 
 
@@ -418,16 +302,24 @@ name2.setText(data);
             Picasso.get().load(mImageUri).into(profilePicture);
         }
     }
-//===================================================================================================
-  private String getFileExtension(Uri uri)
-  {   Context applicationContext = home.getContextOfApplication();
-      ContentResolver cR =  applicationContext.getContentResolver();
-      MimeTypeMap mime = MimeTypeMap.getSingleton();
-      return mime.getExtensionFromMimeType(cR.getType(uri));
-  }
+    //===================================================================================================
+    private String getFileExtension(Uri uri)
+    {   Context applicationContext = home.getContextOfApplication();
+        ContentResolver cR =  applicationContext.getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cR.getType(uri));
+    }
 
     private void UploadPhoto() {
         if (mImageUri != null) {
+
+            //=============
+            // Setting progressDialog Title.
+            progressDialog.setTitle("Image is Uploading...");
+
+            // Showing progressDialog.
+            progressDialog.show();
+            //============
             StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()
                     + "." + getFileExtension(mImageUri));
 
@@ -435,6 +327,9 @@ name2.setText(data);
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                            // Hiding the progressDialog after done uploading.
+                            progressDialog.dismiss();
 
                             PROVIDER_ID = mAuth.getCurrentUser().getProviders().get(0);
                             if (PROVIDER_ID.equals("password")) {
@@ -466,13 +361,27 @@ name2.setText(data);
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
+
+                            // Hiding the progressDialog.
+                            progressDialog.dismiss();
                             Toast.makeText(v.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(v.getContext(), "Uploading...", Toast.LENGTH_LONG).show();
+
+
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred() )/ taskSnapshot.getTotalByteCount();
+                            int currentprogress = (int) progress;
+                            Log.d(TAG,"Upload is " + progress + "% done");
+                            //Toast.makeText(v.getContext(), "Uploading "+currentprogress +"%...", Toast.LENGTH_SHORT).show();
+
+
+                            // Setting progressDialog Title.
+                            progressDialog.setTitle("Image is Uploading "+ currentprogress +" %...");
+
+                            // Toast.makeText(v.getContext(), "Uploading...", Toast.LENGTH_LONG).show();
                         }
                     });
         } else {
@@ -481,21 +390,6 @@ name2.setText(data);
     }
 //===================================================================================================
 
-    public void showProgressDialog() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(v.getContext());
-            mProgressDialog.setMessage(getString(R.string.loading));
-            mProgressDialog.setIndeterminate(true);
-        }
-
-        mProgressDialog.show();
-    }
-
-    public void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.dismiss();
-        }
-    }
 }
 
 

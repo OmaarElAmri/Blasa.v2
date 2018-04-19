@@ -19,9 +19,6 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -37,23 +34,17 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.auth.UserInfo;
-import com.squareup.picasso.Picasso;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
-import static android.provider.SyncStateContract.Helpers.update;
 
 public class MainActivity extends AppCompatActivity {
-String x;
+
+
     String y = "https://image.ibb.co/bGbM6n/centos_users_and_groups.jpg";
     private static final String TAG = "TEST_TEST";
     public User user;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private ProgressDialog mProgressDialog;
-    private Firebase myFirebaseRef;
     //Add YOUR Firebase Reference URL instead of the following URL
     Firebase mRef=new Firebase("https://blasa-v2-8675.firebaseio.com/users/");
     //FaceBook callbackManager

@@ -59,19 +59,7 @@
         android:textSize="20sp"
         android:textStyle="bold" />
     -->
-    <Button
-        android:id="@+id/btn_delete"
-        android:layout_width="150dp"
-        android:layout_height="30dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="26dp"
-        android:background="@null"
-        android:elevation="15dp"
-        android:text="DELETE ACCOUNT"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="12sp"
-        android:textStyle="bold" />
+
 
     <EditText
         android:id="@+id/name"

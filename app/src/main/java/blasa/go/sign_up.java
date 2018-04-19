@@ -114,7 +114,6 @@ private EditText txt_username,txt_email2,txt_password2;
         // Write new user
         saveNewUser(mUser.getUid(), user.getName(), user.getEmail(), user.getPassword(), user.getphotoURL());
         signOut();
-        // Go to LoginActivity
         startActivity(new Intent(sign_up.this, MainActivity.class));
         finish();
     }
