@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.renderscript.RenderScript;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.internal.NavigationMenu;
@@ -17,29 +16,31 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
+import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
-
 import io.github.yavski.fabspeeddial.FabSpeedDial;
 
 import static android.app.Activity.RESULT_OK;
@@ -62,6 +63,8 @@ public class FragmentSettings extends Fragment {
     private String PROVIDER_ID;
     private ProgressDialog progressDialog ;
     private static final int PICK_IMAGE_REQUEST = 1;
+    private ValueEventListener valueEventListener;
+    private DatabaseReference mDatabase;
 
     public FragmentSettings() {
     }
@@ -78,8 +81,16 @@ public class FragmentSettings extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser mUser = mAuth.getCurrentUser();
 //Get the uid for the currently logged in User from intent data passed to this activity
-        String uid = mAuth.getCurrentUser().getUid();
+        final String uid = mAuth.getCurrentUser().getUid();
 
+
+       mDatabase = FirebaseDatabase.getInstance().getReference("Users");
+
+
+
+
+    // final List<User> x = new ArrayList<User>();
+       // FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 //update database====================================================================================
       /*  Firebase firebase = new Firebase("https://blasa-v2-8675.firebaseio.com/users/");
         firebase.child(uid).child("photoURL").setValue("newValue");*/
@@ -234,6 +245,8 @@ You can also delete by specifying null as the value for another write operation 
             @Override
             public boolean onMenuItemSelected(MenuItem menuItem) {
                 if (menuItem.getTitle().equals("Log Out")) {
+
+
                     FirebaseAuth.getInstance().signOut();
                     LoginManager.getInstance().logOut();
                     Intent intent = new Intent(getActivity(), home.class);
@@ -250,6 +263,99 @@ You can also delete by specifying null as the value for another write operation 
                     /*crash*/       if (mUploadTask != null && mUploadTask.isInProgress()) {
                         Toast.makeText(v.getContext(), "Upload in progress", Toast.LENGTH_SHORT).show();
                     } else {
+
+                        //==========================================================
+                        myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/");
+
+                      //Query query =  myFirebaseRef.child(uid).orderByChild("name")
+                                //.startAt(queryText)
+                                //.endAt(queryText+"\uf8ff")
+                               // .equalTo(queryText);
+                        //final String queryText = "";
+                       // for (int i = 0; i < 5; i++) {
+
+
+
+
+                        /*
+                            myFirebaseRef.child(uid).child("name").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    //for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                                    // TODO: handle the post
+                                    String x = dataSnapshot.getValue(String.class);
+                                    String queryText = "";
+                                    if (x.equals(queryText)) {
+                                        Log.d(TAG, x);
+                                  //  }
+
+                                    } else {
+                                        Log.d(TAG,"not found");
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(FirebaseError firebaseError) {
+                                    Toast.makeText(v.getContext(), "" + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
+
+                                }
+
+
+                            });
+
+
+                        */
+
+
+
+
+                     //  }
+
+                      /*  myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/");
+                      myFirebaseRef.orderByChild("name")
+                                .startAt("[a-zA-Z0-9]*")
+                                .endAt("Omar")
+                                .once(value);
+                        Log.d(TAG,query);*/
+                        /*myFirebaseRef.startAt(queryText)
+                                .endAt(queryText+"\uf8ff")
+                                .once("value");
+
+*/
+                      /*  myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/");
+                        Query query = myFirebaseRef.child(uid);
+                        final String queryText = "admin";
+                        // Get a reference to our posts
+                        // Attach an listener to read the data at our posts reference
+                        query.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot snapshot) {
+
+                                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                                    String x = postSnapshot.getValue(String.class);
+                                   //user  = dataSnapshot.getValue(String.class);
+                                    if (x.equals(queryText)){Log.d(TAG,x);}
+                                    Log.d(TAG, user.getName() );
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(FirebaseError firebaseError) {
+                                System.out.println("The read failed: " + firebaseError.getMessage());
+                            }
+                        });*/
+
+
+
+
+
+
+
+
+                        //============================================================
+
+
+
                         UploadPhoto();
                     }
 
@@ -262,6 +368,15 @@ You can also delete by specifying null as the value for another write operation 
 
             }
         });
+
+
+        //=============================================================
+
+
+
+
+
+        //=============================================================
 
 
 
