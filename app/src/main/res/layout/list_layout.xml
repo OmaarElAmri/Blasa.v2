@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="40dp">
+
+    <TextView
+        android:id="@+id/txt_namex"
+        android:layout_width="211dp"
+        android:layout_height="34dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/txt_emailx" />
+
+    <TextView
+        android:id="@+id/txt_emailx"
+        android:layout_width="213dp"
+        android:layout_height="34dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
+</RelativeLayout>

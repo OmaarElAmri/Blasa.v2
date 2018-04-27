@@ -1,0 +1,105 @@
+package blasa.go;
+
+/**
+ * Created by omarelamri on 25/04/2018.
+ */
+
+public class Rides {
+    private String start;
+    private String finish;
+    private String date;
+    private String time;
+    private String price;
+    private String phone;
+    private String description;
+    private String name;
+    private String photoURL;
+
+    public  Rides(){
+
+    }
+
+    public Rides(String start, String finish, String date, String time, String price, String phone, String description, String name, String photoURL) {
+        this.start = start;
+        this.finish = finish;
+        this.date = date;
+        this.time = time;
+        this.price = price;
+        this.phone = phone;
+        this.description = description;
+        this.name = name;
+        this.photoURL = photoURL;
+    }
+
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    public void setFinish(String finish) {
+        this.finish = finish;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPhotoURL(String photoURL) {
+        this.photoURL = photoURL;
+    }
+
+    public String getStart() {
+        return start;
+    }
+
+    public String getFinish() {
+        return finish;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPhotoURL() {
+        return photoURL;
+    }
+}
