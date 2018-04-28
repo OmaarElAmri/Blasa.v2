@@ -14,12 +14,15 @@ public class Rides {
     private String description;
     private String name;
     private String photoURL;
+    private String opt1;
+    private String opt2;
+    private String opt3;
 
     public  Rides(){
 
     }
 
-    public Rides(String start, String finish, String date, String time, String price, String phone, String description, String name, String photoURL) {
+    public Rides(String start, String finish, String date, String time, String price, String phone, String description, String name, String photoURL, String opt1, String opt2, String opt3) {
         this.start = start;
         this.finish = finish;
         this.date = date;
@@ -29,6 +32,9 @@ public class Rides {
         this.description = description;
         this.name = name;
         this.photoURL = photoURL;
+        this.opt1 = opt1;
+        this.opt2 = opt2;
+        this.opt3 = opt3;
     }
 
     public void setStart(String start) {
@@ -101,5 +107,29 @@ public class Rides {
 
     public String getPhotoURL() {
         return photoURL;
+    }
+
+    public String getOpt1() {
+        return opt1;
+    }
+
+    public void setOpt1(String opt1) {
+        this.opt1 = opt1;
+    }
+
+    public String getOpt2() {
+        return opt2;
+    }
+
+    public void setOpt2(String opt2) {
+        this.opt2 = opt2;
+    }
+
+    public String getOpt3() {
+        return opt3;
+    }
+
+    public void setOpt3(String opt3) {
+        this.opt3 = opt3;
     }
 }
