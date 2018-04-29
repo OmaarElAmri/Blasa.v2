@@ -11,7 +11,6 @@ public class Rides {
     private String time;
     private String price;
     private String phone;
-    private String description;
     private String name;
     private String photoURL;
     private String opt1;
@@ -22,14 +21,13 @@ public class Rides {
 
     }
 
-    public Rides(String start, String finish, String date, String time, String price, String phone, String description, String name, String photoURL, String opt1, String opt2, String opt3) {
+    public Rides(String start, String finish, String date, String time, String price, String phone, String name, String photoURL, String opt1, String opt2, String opt3) {
         this.start = start;
         this.finish = finish;
         this.date = date;
         this.time = time;
         this.price = price;
         this.phone = phone;
-        this.description = description;
         this.name = name;
         this.photoURL = photoURL;
         this.opt1 = opt1;
@@ -59,10 +57,6 @@ public class Rides {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public void setName(String name) {
@@ -95,10 +89,6 @@ public class Rides {
 
     public String getPhone() {
         return phone;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public String getName() {

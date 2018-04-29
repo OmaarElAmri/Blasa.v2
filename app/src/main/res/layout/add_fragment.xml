@@ -9,7 +9,7 @@
         android:layout_width="370dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
         <EditText
@@ -36,7 +36,7 @@
         android:layout_width="370dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
         <EditText
@@ -64,7 +64,7 @@
         android:layout_width="370dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
         <EditText
@@ -90,7 +90,7 @@
         android:layout_width="250dp"
         android:layout_height="47dp"
         android:layout_marginLeft="70dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal">
 
         <RadioGroup
@@ -123,7 +123,7 @@
         android:layout_width="250dp"
         android:layout_height="47dp"
         android:layout_marginLeft="70dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal">
 
         <RadioGroup
@@ -156,7 +156,7 @@
         android:layout_width="250dp"
         android:layout_height="47dp"
         android:layout_marginLeft="70dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal">
 
         <RadioGroup
@@ -187,23 +187,18 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp">
 
-        <io.github.yavski.fabspeeddial.FabSpeedDial
-            android:id="@+id/fabdial2"
-            android:layout_width="wrap_content"
+
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_gravity="bottom|end"
-            app:fabBackgroundTint="#0180E4"
-            app:fabDrawableTint="#fff"
-            app:fabGravity="bottom_end"
-            app:fabMenu="@menu/add"
-            app:miniFabBackgroundTint="#fff"
-            app:miniFabTitleTextColor="#000000">
-
-        </io.github.yavski.fabspeeddial.FabSpeedDial>
+            android:text="add"
+            android:backgroundTint="#0180E4"
+            android:textColor="#ffff"
+            android:elevation="15dp"/>
     </RelativeLayout>
 
 </LinearLayout>
