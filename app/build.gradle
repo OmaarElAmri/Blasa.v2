@@ -49,6 +49,7 @@ dependencies {
     //Custom
     compile 'io.github.yavski:fab-speed-dial:1.0.6'
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
 
 }
 apply plugin: 'com.google.gms.google-services'

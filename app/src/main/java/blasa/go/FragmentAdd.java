@@ -2,12 +2,10 @@ package blasa.go;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.internal.NavigationMenu;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -25,6 +23,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 
+
+
 /**
  * Created by omarelamri on 10/04/2018.
  */
@@ -39,7 +39,9 @@ public class FragmentAdd extends Fragment {
     private Button btn_add;
     private FirebaseAuth mAuth;
     private Firebase myFirebaseRef;
+    private String PROVIDER_ID;
     private Firebase mRef = new Firebase("https://blasa-v2-8675.firebaseio.com/");
+
     View v;
 
     public FragmentAdd() {
@@ -61,11 +63,135 @@ public class FragmentAdd extends Fragment {
         btn_add = (Button) v.findViewById(R.id.btn_add) ;
 
         mAuth = FirebaseAuth.getInstance();
+        final FirebaseUser mUser = mAuth.getCurrentUser();
+//Get the uid for the currently logged in User from intent data passed to this activity
         final String uid = mAuth.getCurrentUser().getUid();
-
 //=======================================================================================
+        PROVIDER_ID = mUser.getProviders().get(0);
+
+        if (PROVIDER_ID.equals("password")) {
+            Log.d(TAG, "provider = "+ PROVIDER_ID);
+            myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/");
 //name
+            myFirebaseRef.child(uid).child("name").addValueEventListener(new ValueEventListener() {
+                //onDataChange is called every time the name of the User changes in your Firebase Database
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+//Inside onDataChange we can get the data as an Object from the dataSnapshot
+//getValue returns an Object. We can specify the type by passing the type expected as a parameter
+                    String data1 = dataSnapshot.getValue(String.class);
+                    name = data1;
+                }
+
+                //onCancelled is called in case of any error
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+                    Toast.makeText(v.getContext(), "" + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+
+//photo
+            myFirebaseRef.child(uid).child("photoURL").addValueEventListener(new ValueEventListener() {
+                //onDataChange is called every time the name of the User changes in your Firebase Database
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+//Inside onDataChange we can get the data as an Object from the dataSnapshot
+//getValue returns an Object. We can specify the type by passing the type expected as a parameter
+                    String data2 = dataSnapshot.getValue(String.class);
+                    photoURL = data2;
+
+                }
+
+                //onCancelled is called in case of any error
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+                    Toast.makeText(v.getContext(), "" + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+
+        } else if (PROVIDER_ID.equals("facebook.com")){
+            Log.d(TAG, "provider = "+ PROVIDER_ID);
+            myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/facebook/");
+            myFirebaseRef.child(uid).child("name").addValueEventListener(new ValueEventListener() {
+                //onDataChange is called every time the name of the User changes in your Firebase Database
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+//Inside onDataChange we can get the data as an Object from the dataSnapshot
+//getValue returns an Object. We can specify the type by passing the type expected as a parameter
+                    String data1 = dataSnapshot.getValue(String.class);
+                    name = data1;
+                }
+
+                //onCancelled is called in case of any error
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+                    Toast.makeText(v.getContext(), "" + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+//photo
+            myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/facebook/");
+            myFirebaseRef.child(uid).child("photoURL").addValueEventListener(new ValueEventListener() {
+                //onDataChange is called every time the name of the User changes in your Firebase Database
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+//Inside onDataChange we can get the data as an Object from the dataSnapshot
+//getValue returns an Object. We can specify the type by passing the type expected as a parameter
+                    String data2 = dataSnapshot.getValue(String.class);
+                    photoURL = data2;
+                }
+
+                //onCancelled is called in case of any error
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+                    Toast.makeText(v.getContext(), "" + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+        else if (PROVIDER_ID.equals("google.com"))
+        {  Log.d(TAG, "provider = "+ PROVIDER_ID);
+            myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/google/");
+//name
+            myFirebaseRef.child(uid).child("name").addValueEventListener(new ValueEventListener() {
+                //onDataChange is called every time the name of the User changes in your Firebase Database
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+//Inside onDataChange we can get the data as an Object from the dataSnapshot
+//getValue returns an Object. We can specify the type by passing the type expected as a parameter
+                    String data1 = dataSnapshot.getValue(String.class);
+                    name = data1;
+                }
+
+                //onCancelled is called in case of any error
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+                    Toast.makeText(v.getContext(), "" + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+//photo
+            myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/google/");
+            myFirebaseRef.child(uid).child("photoURL").addValueEventListener(new ValueEventListener() {
+                //onDataChange is called every time the name of the User changes in your Firebase Database
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+//Inside onDataChange we can get the data as an Object from the dataSnapshot
+//getValue returns an Object. We can specify the type by passing the type expected as a parameter
+                    String data2 = dataSnapshot.getValue(String.class);
+                    photoURL = data2;
+                }
+
+                //onCancelled is called in case of any error
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+                    Toast.makeText(v.getContext(), "" + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+
+/*
+//=================================================================================
         myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/");
+//name
+
         myFirebaseRef.child(uid).child("name").addValueEventListener(new ValueEventListener() {
             //onDataChange is called every time the name of the User changes in your Firebase Database
             @Override
@@ -98,7 +224,7 @@ public class FragmentAdd extends Fragment {
             }
         });
 //========================================================================================
-
+*/
         r1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 // checkedId is the RadioButton selected
@@ -167,7 +293,8 @@ public class FragmentAdd extends Fragment {
         });
 
 
-     
+
+
       return v;
     }
     protected void setUpRide() {
