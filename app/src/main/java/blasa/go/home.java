@@ -38,26 +38,17 @@ public class home extends AppCompatActivity {
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_search_black_24dp);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_add_location_24dp);
 
-
+/*
         //Remove Shadow From the action bar
         ActionBar actionBar = getSupportActionBar();
         actionBar.setElevation(0);
         contextOfApplication = getApplicationContext();
+        */
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
-
-//===============
-        /*String y = getIntent().getStringExtra("user_id");
-        Log.d(TAG,"user_id");
-        try {
-            name.setText(y);
-        }catch (NullPointerException e){}*/
-// ===================
-
 
 
 //onlogout click from FragmentSettings
@@ -73,7 +64,6 @@ public class home extends AppCompatActivity {
         super.onStop();
 
     }
-
 
 // a static variable to get a reference of our application context
 public static Context contextOfApplication;

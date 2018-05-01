@@ -16,6 +16,7 @@ public class Rides {
     private String opt1;
     private String opt2;
     private String opt3;
+    
 
     public  Rides(){
 

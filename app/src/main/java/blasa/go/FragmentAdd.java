@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -20,10 +19,6 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.squareup.picasso.Picasso;
-
-
-
 
 /**
  * Created by omarelamri on 10/04/2018.
@@ -33,9 +28,8 @@ public class FragmentAdd extends Fragment {
     public Rides rides;
     private EditText txt_from, txt_to, txt_date, txt_time, txt_phone, txt_price;
     private RadioGroup r1, r2, r3;
-    private RadioButton radioButton1, radioButton2, radioButton3, radioButton4, radioButton5, radioButton6;
     private static final String TAG = "TEST_TEST";
-    private String url1, url2, url3,name,photoURL,to,from,date,time,phone,price;
+    private String url1, url2, url3,name,photoURL;
     private Button btn_add;
     private FirebaseAuth mAuth;
     private Firebase myFirebaseRef;
@@ -66,7 +60,7 @@ public class FragmentAdd extends Fragment {
         final FirebaseUser mUser = mAuth.getCurrentUser();
 //Get the uid for the currently logged in User from intent data passed to this activity
         final String uid = mAuth.getCurrentUser().getUid();
-//=======================================================================================
+
         PROVIDER_ID = mUser.getProviders().get(0);
 
         if (PROVIDER_ID.equals("password")) {
@@ -187,44 +181,6 @@ public class FragmentAdd extends Fragment {
             });
         }
 
-/*
-//=================================================================================
-        myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/");
-//name
-
-        myFirebaseRef.child(uid).child("name").addValueEventListener(new ValueEventListener() {
-            //onDataChange is called every time the name of the User changes in your Firebase Database
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-//Inside onDataChange we can get the data as an Object from the dataSnapshot
-//getValue returns an Object. We can specify the type by passing the type expected as a parameter
-                String data1 = dataSnapshot.getValue(String.class);
-                name = data1;
-            }
-            //onCancelled is called in case of any error
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                Toast.makeText(v.getContext(), "" + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-//photo
-        myFirebaseRef.child(uid).child("photoURL").addValueEventListener(new ValueEventListener() {
-            //onDataChange is called every time the name of the User changes in your Firebase Database
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-//Inside onDataChange we can get the data as an Object from the dataSnapshot
-//getValue returns an Object. We can specify the type by passing the type expected as a parameter
-                String data2 = dataSnapshot.getValue(String.class);
-                photoURL = data2;
-            }
-            //onCancelled is called in case of any error
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                Toast.makeText(v.getContext(), "" + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-//========================================================================================
-*/
         r1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 // checkedId is the RadioButton selected
@@ -243,7 +199,7 @@ public class FragmentAdd extends Fragment {
                 }
             }
         });
-//=================================================================================================================
+
         r2.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 // checkedId is the RadioButton selected
@@ -260,7 +216,7 @@ public class FragmentAdd extends Fragment {
                 }
             }
         });
-//===========================================================================================
+
         r3.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 // checkedId is the RadioButton selected
@@ -279,7 +235,7 @@ public class FragmentAdd extends Fragment {
                 }
             }
         });
-//==========================================================================================
+
      btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -288,15 +244,13 @@ public class FragmentAdd extends Fragment {
                 }
                 setUpRide();
                 saveNewRide(rides.getStart(),rides.getFinish(),rides.getDate(),rides.getTime(),rides.getPrice(),rides.getPhone(),rides.getName(),rides.getPhotoURL(),rides.getOpt1(),rides.getOpt2(),rides.getOpt3());
-
+                Toast.makeText(v.getContext(),"Ride added!",Toast.LENGTH_SHORT).show();
             }
         });
 
-
-
-
       return v;
     }
+
     protected void setUpRide() {
         rides = new Rides();
         rides.setStart(txt_from.getText().toString());
@@ -311,12 +265,12 @@ public class FragmentAdd extends Fragment {
         rides.setName(name);
         rides.setPhotoURL(photoURL);
     }
+
     private void saveNewRide(String start, String finish, String date, String time, String price, String phone, String name, String photoURL, String opt1, String opt2, String opt3) {
        Rides rides = new Rides (start,finish,date,time,price,phone,name,photoURL,opt1,opt2,opt3);
 
         mRef.child("rides").push().setValue(rides);
     }
-
 
     private boolean validateForm() {
         boolean valid = true;
@@ -327,7 +281,6 @@ public class FragmentAdd extends Fragment {
         } else {
             txt_to.setError(null);
         }
-
         String from = txt_from.getText().toString();
         if (TextUtils.isEmpty(from)) {
             txt_from.setError("Required.");
@@ -342,7 +295,6 @@ public class FragmentAdd extends Fragment {
         } else {
             txt_date.setError(null);
         }
-
         String time = txt_time.getText().toString();
         if (TextUtils.isEmpty(time)) {
             txt_time.setError("Required.");
@@ -358,7 +310,6 @@ public class FragmentAdd extends Fragment {
         } else {
             txt_price.setError(null);
         }
-
         String phone = txt_phone.getText().toString();
         if (TextUtils.isEmpty(phone)) {
             txt_phone.setError("Required.");
@@ -366,11 +317,8 @@ public class FragmentAdd extends Fragment {
         } else {
             txt_phone.setError(null);
         }
-
-
         return valid;
     }
-
 }
 
 

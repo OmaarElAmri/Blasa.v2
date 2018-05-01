@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/relativex"
     android:layout_width="match_parent"
     android:layout_height="190dp"
-    android:layout_marginTop="40dp">
+    android:layout_marginTop="40dp"
+    >
 
     <TextView
         android:id="@+id/txt_tox"
@@ -21,9 +23,9 @@
         android:layout_height="34dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:textAlignment="center"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:textAlignment="center"/>
+        android:textStyle="bold" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
@@ -36,7 +38,7 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="35dp"
-        android:layout_height="36dp"
+        android:layout_height="35dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_marginEnd="113dp"
@@ -60,11 +62,10 @@
         android:layout_height="30dp"
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/txt_fromx"
-        android:layout_marginTop="45dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:layout_marginTop="50dp"
         android:textAlignment="center"
-         />
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txt_timex"
@@ -72,60 +73,76 @@
         android:layout_height="30dp"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/txt_datex"
+        android:textAlignment="center"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:textAlignment="center"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txt_pricex"
         android:layout_width="103dp"
         android:layout_height="30dp"
         android:layout_alignStart="@+id/txt_fromx"
-        android:layout_centerVertical="true"
+        android:layout_alignTop="@+id/txt_phonex"
         android:textAlignment="center"
         android:textSize="20sp"
         android:textStyle="bold" />
-    <!--
-        <TextView
-            android:id="@+id/txt_phonex"
-            android:layout_width="114dp"
-            android:layout_height="28dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignTop="@+id/txt_pricex"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textAlignment="center"/>
-    -->
+
+    <TextView
+        android:id="@+id/txt_phonex"
+        android:layout_width="114dp"
+        android:layout_height="28dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="60dp"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
     <ImageView
         android:id="@+id/opt1x"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
         android:layout_alignStart="@+id/imageView"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="5dp" />
+        android:layout_alignTop="@+id/txt_namex" />
 
     <ImageView
         android:id="@+id/opt2x"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
         android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="54dp" />
+        android:layout_alignTop="@+id/opt1x"
+        android:layout_marginEnd="65dp" />
 
     <ImageView
         android:id="@+id/opt3x"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
         android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="5dp" />
+        android:layout_alignTop="@+id/txt_namex"
+        android:layout_marginEnd="18dp" />
 
-    <ImageButton
-        android:id="@+id/imageButton"
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="38dp"
+        android:layout_height="31dp"
+        android:layout_alignStart="@+id/imageView"
+        android:layout_alignTop="@+id/txt_pricex"
+        app:srcCompat="@drawable/call_50px" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="31dp"
+        android:layout_height="33dp"
+        android:layout_alignStart="@+id/imageView"
+        android:layout_alignTop="@+id/txt_datex"
+        app:srcCompat="@drawable/schedule_50px" />
+
+    <ImageView
+        android:id="@+id/imageView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/txt_fromx"
         android:layout_alignParentBottom="true"
-        app:srcCompat="@drawable/call_50px" />
+        android:layout_alignParentStart="true"
+        app:srcCompat="@drawable/blueline" />
 
 </RelativeLayout>
