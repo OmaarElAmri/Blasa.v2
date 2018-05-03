@@ -236,14 +236,26 @@ public class FragmentSettings extends Fragment {
                     Toast.makeText(v.getContext(),"log out",Toast.LENGTH_SHORT).show();
 
                 } else if (menuItem.getTitle().equals("Choose Photo")) {
-                    openFileChooser();
+                    PROVIDER_ID = mAuth.getCurrentUser().getProviders().get(0);
+                    if (PROVIDER_ID.equals("password")) {
+                        openFileChooser();
+                    }
+                    else {
+                        Toast.makeText(v.getContext(), "only for blasa accounts!", Toast.LENGTH_SHORT).show();
+                    }
+
                 } else {
                     /*crash*/       if (mUploadTask != null && mUploadTask.isInProgress()) {
                         Toast.makeText(v.getContext(), "Upload in progress", Toast.LENGTH_SHORT).show();
                     } else {
-
-                        myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/");
-                        UploadPhoto();
+                        PROVIDER_ID = mAuth.getCurrentUser().getProviders().get(0);
+                        if (PROVIDER_ID.equals("password")) {
+                            myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/");
+                            UploadPhoto();
+                        }
+                        else {
+                            Toast.makeText(v.getContext(), "only for blasa accounts!", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
                 return true;
@@ -309,7 +321,8 @@ public class FragmentSettings extends Fragment {
                                 Firebase firebase = new Firebase("https://blasa-v2-8675.firebaseio.com/users/");
                                 String uid = mAuth.getCurrentUser().getUid();
                                 firebase.child(uid).child("photoURL").setValue(x);
-                            } else if (PROVIDER_ID.equals("facebook.com")) {
+                            }
+                            /*else if (PROVIDER_ID.equals("facebook.com")) {
                                 Toast.makeText(v.getContext(), "only for blasa users!", Toast.LENGTH_LONG).show();
                                 String x = taskSnapshot.getDownloadUrl().toString();
                                 Firebase firebase = new Firebase("https://blasa-v2-8675.firebaseio.com/users/facebook/");
@@ -324,7 +337,7 @@ public class FragmentSettings extends Fragment {
                                 Firebase firebase = new Firebase("https://blasa-v2-8675.firebaseio.com/users/google/");
                                 String uid = mAuth.getCurrentUser().getUid();
                                 firebase.child(uid).child("photoURL").setValue(x);
-                            }
+                            }*/
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
