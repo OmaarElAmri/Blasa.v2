@@ -1,6 +1,8 @@
 package blasa.go;
 
 import android.content.ActivityNotFoundException;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -99,6 +101,10 @@ String y = model.getName();
         String w = model.getPhone();
         Log.d(TAG, w);
 
+        ClipboardManager clipboard = (ClipboardManager) v.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("phone number", w);
+        clipboard.setPrimaryClip(clip);
+        Toast.makeText(v.getContext(),"phone number copied to clipboard",Toast.LENGTH_LONG).show();
 /*
         Intent callIntent = new Intent(Intent.ACTION_CALL); //use ACTION_CALL class
         callIntent.setData(Uri.parse("555"));    //this is the phone number calling
