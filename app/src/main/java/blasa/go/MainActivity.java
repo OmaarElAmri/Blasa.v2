@@ -19,6 +19,9 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -34,6 +37,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.UserInfo;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+import static android.provider.SyncStateContract.Helpers.update;
+
 
 
 public class MainActivity extends AppCompatActivity {
@@ -45,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private ProgressDialog mProgressDialog;
+    private Firebase myFirebaseRef;
     //Add YOUR Firebase Reference URL instead of the following URL
     Firebase mRef=new Firebase("https://blasa-v2-8675.firebaseio.com/users/");
     //FaceBook callbackManager
@@ -195,6 +205,8 @@ btn_register.setOnClickListener(new View.OnClickListener() {
                             Toast.makeText(MainActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         } else {
+
+
                             if (mAuth.getCurrentUser() != null) {
                                 Intent intent = new Intent(getApplicationContext(), home.class);
                                 startActivity(intent);
@@ -202,7 +214,8 @@ btn_register.setOnClickListener(new View.OnClickListener() {
                                 finish();
                                 Log.d(TAG, "onAuthStateChanged:signed_in:" + mAuth.getCurrentUser().getUid());
 
-                            } else {
+                            }
+                            else {
 
                             Toast.makeText(MainActivity.this, "Welcome !.",
                                     Toast.LENGTH_SHORT).show();
@@ -278,14 +291,16 @@ btn_register.setOnClickListener(new View.OnClickListener() {
                             Toast.makeText(MainActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }else{
-                            if (mAuth.getCurrentUser() != null) {
+
+
+                          /*  if (mAuth.getCurrentUser() != null) {
                                 Intent intent = new Intent(getApplicationContext(), home.class);
                                 startActivity(intent);
                                 Toast.makeText(MainActivity.this, "Welcome !", Toast.LENGTH_SHORT).show();
                                 finish();
                                 Log.d(TAG, "onAuthStateChanged:signed_in:" + mAuth.getCurrentUser().getUid());
 
-                            } else {
+                            } else {*/
 
                             Toast.makeText(MainActivity.this, "Welcome !",
                                     Toast.LENGTH_SHORT).show();
@@ -295,16 +310,23 @@ btn_register.setOnClickListener(new View.OnClickListener() {
                             Log.d(TAG,email);
                             Log.d(TAG,name);
 
+
+                            //testing
+                            String photoURL = task.getResult().getUser().getPhotoUrl().toString();
+                            photoURL =  photoURL+ "/picture?height=500";
+                         // photoURL =  photoURL+"/picture?type=large";
+                            Log.d(TAG,photoURL);
+
                             //Create a new User and Save it in Firebase database
-                            User user = new User(uid,name,email,null,y);
+                            User user = new User(uid,name,email,null,photoURL);
+                            //User user = new User(uid,name,email,null,y);
 
                             mRef.child("facebook").child(uid).setValue(user);
-
-
                             Intent intent = new Intent(getApplicationContext(), home.class);
                             startActivity(intent);
                             finish();}
-                        }
+
+                        //}
 
                         hideProgressDialog();
                     }
@@ -347,22 +369,25 @@ btn_register.setOnClickListener(new View.OnClickListener() {
                             final String uid = user.getUid();
                             String name = user.getDisplayName() ;
                             String email=user.getEmail();
+                            Log.d(TAG,name+email);
 
-                            if (mAuth.getCurrentUser() != null) {
+                            //testing
+                            String photoURL = user.getPhotoUrl().toString();
+                            photoURL = photoURL.replace("/s96-c/","/s900-c/");
+                           /* if (mAuth.getCurrentUser() != null) {
                                 Intent intent = new Intent(getApplicationContext(), home.class);
                                 startActivity(intent);
                                 Toast.makeText(MainActivity.this, "Welcome !", Toast.LENGTH_SHORT).show();
                                 finish();
                                 Log.d(TAG, "onAuthStateChanged:signed_in:" + mAuth.getCurrentUser().getUid());
-                            } else {
-                                User user2 = new User(uid, name, email, null, y);
+                            } else {*/
 
+                                User user2 = new User(uid, name, email, null,photoURL);
                                 mRef.child("google").child(uid).setValue(user2);
-
                                 Toast.makeText(MainActivity.this, "Welcome !", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), home.class);
                                 startActivity(intent);
-                            }
+                           // }
 
 
                         } else {

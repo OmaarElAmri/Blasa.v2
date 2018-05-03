@@ -64,13 +64,15 @@ public class FragmentSettings extends Fragment {
     private ValueEventListener valueEventListener;
     private DatabaseReference mDatabase;
 
-    public FragmentSettings() {}
+    public FragmentSettings() {
+
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         v = inflater.inflate(R.layout.settings_fragment, container, false);
+
         progressDialog = new ProgressDialog(v.getContext());
         name2 = (EditText) v.findViewById(R.id.name);
         profilePicture = (ImageView) v.findViewById(R.id.profilePicture);
@@ -213,19 +215,23 @@ public class FragmentSettings extends Fragment {
         fabSpeedDial.setMenuListener(new FabSpeedDial.MenuListener() {
             @Override
             public boolean onPrepareMenu(NavigationMenu navigationMenu) {
+
                 return true;
+
             }
 
             @Override
             public boolean onMenuItemSelected(MenuItem menuItem) {
-                if (menuItem.getTitle().equals("Log Out"))
-                {
+                if (menuItem.getTitle().equals("Log Out")) {
+
+
                     FirebaseAuth.getInstance().signOut();
                     LoginManager.getInstance().logOut();
                     Intent intent = new Intent(getActivity(), home.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intent.putExtra("LOGOUT", true);
+                    intent.putExtra("LOGOUT",true);
                     startActivity(intent);
+
                     getActivity().finish();
                     Toast.makeText(v.getContext(),"log out",Toast.LENGTH_SHORT).show();
 
@@ -235,6 +241,7 @@ public class FragmentSettings extends Fragment {
                     /*crash*/       if (mUploadTask != null && mUploadTask.isInProgress()) {
                         Toast.makeText(v.getContext(), "Upload in progress", Toast.LENGTH_SHORT).show();
                     } else {
+
                         myFirebaseRef = new Firebase("https://blasa-v2-8675.firebaseio.com/users/");
                         UploadPhoto();
                     }
@@ -243,13 +250,16 @@ public class FragmentSettings extends Fragment {
             }
 
             @Override
-            public void onMenuClosed() {}
+            public void onMenuClosed() {
+
+            }
         });
 
         return v;
     }
 
 //choosing picture
+
     private void openFileChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -277,8 +287,8 @@ public class FragmentSettings extends Fragment {
     }
 
     private void UploadPhoto() {
-        if (mImageUri != null)
-        {
+        if (mImageUri != null) {
+
             // Setting progressDialog Title.
             progressDialog.setTitle("Image is Uploading...");
             progressDialog.show();
@@ -293,16 +303,14 @@ public class FragmentSettings extends Fragment {
                             progressDialog.dismiss();
 
                             PROVIDER_ID = mAuth.getCurrentUser().getProviders().get(0);
-                            if (PROVIDER_ID.equals("password"))
-                            {
+                            if (PROVIDER_ID.equals("password")) {
                                 Toast.makeText(v.getContext(), "Upload successful", Toast.LENGTH_LONG).show();
                                 String x = taskSnapshot.getDownloadUrl().toString();
                                 Firebase firebase = new Firebase("https://blasa-v2-8675.firebaseio.com/users/");
                                 String uid = mAuth.getCurrentUser().getUid();
                                 firebase.child(uid).child("photoURL").setValue(x);
-                            } else if (PROVIDER_ID.equals("facebook.com"))
-                            {
-                                Toast.makeText(v.getContext(), "Upload successful", Toast.LENGTH_LONG).show();
+                            } else if (PROVIDER_ID.equals("facebook.com")) {
+                                Toast.makeText(v.getContext(), "only for blasa users!", Toast.LENGTH_LONG).show();
                                 String x = taskSnapshot.getDownloadUrl().toString();
                                 Firebase firebase = new Firebase("https://blasa-v2-8675.firebaseio.com/users/facebook/");
                                 String uid = mAuth.getCurrentUser().getUid();
@@ -310,6 +318,7 @@ public class FragmentSettings extends Fragment {
                             }
                             else if (PROVIDER_ID.equals("google.com"))
                             {
+                                Toast.makeText(v.getContext(), "only for blasa users!", Toast.LENGTH_LONG).show();
                                 Toast.makeText(v.getContext(), "Upload successful", Toast.LENGTH_LONG).show();
                                 String x = taskSnapshot.getDownloadUrl().toString();
                                 Firebase firebase = new Firebase("https://blasa-v2-8675.firebaseio.com/users/google/");
@@ -336,7 +345,7 @@ public class FragmentSettings extends Fragment {
                         }
                     });
         } else {
-            Toast.makeText(v.getContext(), "No file selected", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(v.getContext(), "No file selected", Toast.LENGTH_SHORT).show();
         }
     }
 }

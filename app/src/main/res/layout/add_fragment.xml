@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -8,7 +8,7 @@
     <LinearLayout
         android:layout_width="370dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
@@ -35,7 +35,7 @@
     <LinearLayout
         android:layout_width="370dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
@@ -63,7 +63,7 @@
     <LinearLayout
         android:layout_width="370dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
@@ -82,14 +82,15 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="5dp"
             android:background="@drawable/edittextstyle"
-            android:hint="Phone" />
+            android:hint="Phone"
+            android:inputType="" />
     </LinearLayout>
 
     <RelativeLayout
 
         android:layout_width="250dp"
         android:layout_height="47dp"
-        android:layout_marginLeft="70dp"
+        android:layout_marginStart="70dp"
         android:layout_marginTop="15dp"
         android:orientation="horizontal">
 
@@ -122,7 +123,7 @@
 
         android:layout_width="250dp"
         android:layout_height="47dp"
-        android:layout_marginLeft="70dp"
+        android:layout_marginStart="70dp"
         android:layout_marginTop="15dp"
         android:orientation="horizontal">
 
@@ -155,7 +156,7 @@
 
         android:layout_width="250dp"
         android:layout_height="47dp"
-        android:layout_marginLeft="70dp"
+        android:layout_marginStart="70dp"
         android:layout_marginTop="15dp"
         android:orientation="horizontal">
 
@@ -195,10 +196,11 @@
             android:id="@+id/btn_add"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="add"
+            android:layout_alignParentBottom="true"
             android:backgroundTint="#0180E4"
-            android:textColor="#ffff"
-            android:elevation="15dp"/>
+            android:elevation="15dp"
+            android:text="add"
+            android:textColor="#ffff" />
     </RelativeLayout>
 
 </LinearLayout>

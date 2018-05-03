@@ -242,8 +242,22 @@ public class FragmentAdd extends Fragment {
                 if (!validateForm()) {
                     return;
                 }
-                setUpRide();
-                saveNewRide(rides.getStart(),rides.getFinish(),rides.getDate(),rides.getTime(),rides.getPrice(),rides.getPhone(),rides.getName(),rides.getPhotoURL(),rides.getOpt1(),rides.getOpt2(),rides.getOpt3());
+
+                rides = new Rides();
+                rides.setStart(txt_from.getText().toString());
+                rides.setFinish(txt_to.getText().toString());
+                rides.setDate(txt_date.getText().toString());
+                rides.setTime(txt_time.getText().toString());
+                rides.setPrice(txt_price.getText().toString());
+                rides.setPhone(txt_phone.getText().toString());
+                rides.setOpt1(url1);
+                rides.setOpt2(url2);
+                rides.setOpt3(url3);
+                rides.setName(name);
+                rides.setPhotoURL(photoURL);
+                rides.setUserid(uid);
+
+                saveNewRide(rides.getStart(),rides.getFinish(),rides.getDate(),rides.getTime(),rides.getPrice(),rides.getPhone(),rides.getName(),rides.getPhotoURL(),rides.getOpt1(),rides.getOpt2(),rides.getOpt3(),rides.getUserid());
                 Toast.makeText(v.getContext(),"Ride added!",Toast.LENGTH_SHORT).show();
             }
         });
@@ -251,23 +265,8 @@ public class FragmentAdd extends Fragment {
       return v;
     }
 
-    protected void setUpRide() {
-        rides = new Rides();
-        rides.setStart(txt_from.getText().toString());
-        rides.setFinish(txt_to.getText().toString());
-        rides.setDate(txt_date.getText().toString());
-        rides.setTime(txt_time.getText().toString());
-        rides.setPrice(txt_price.getText().toString());
-        rides.setPhone(txt_phone.getText().toString());
-        rides.setOpt1(url1);
-        rides.setOpt2(url2);
-        rides.setOpt3(url3);
-        rides.setName(name);
-        rides.setPhotoURL(photoURL);
-    }
-
-    private void saveNewRide(String start, String finish, String date, String time, String price, String phone, String name, String photoURL, String opt1, String opt2, String opt3) {
-       Rides rides = new Rides (start,finish,date,time,price,phone,name,photoURL,opt1,opt2,opt3);
+    private void saveNewRide(String start, String finish, String date, String time, String price, String phone, String name, String photoURL, String opt1, String opt2, String opt3, String userid) {
+       Rides rides = new Rides (start,finish,date,time,price,phone,name,photoURL,opt1,opt2,opt3,userid);
 
         mRef.child("rides").push().setValue(rides);
     }

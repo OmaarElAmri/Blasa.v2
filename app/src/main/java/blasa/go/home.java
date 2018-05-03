@@ -6,11 +6,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 
-public class home extends AppCompatActivity {
+public class home extends AppCompatActivity  {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -38,12 +39,12 @@ public class home extends AppCompatActivity {
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_search_black_24dp);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_add_location_24dp);
 
-/*
+
         //Remove Shadow From the action bar
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setElevation(0);
+        actionBar.setElevation(20);
         contextOfApplication = getApplicationContext();
-        */
+
     }
 
     @Override

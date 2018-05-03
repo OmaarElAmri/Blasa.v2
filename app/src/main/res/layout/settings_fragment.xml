@@ -12,7 +12,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="81dp"
         android:scaleType="centerInside"
-        android:src="@drawable/icon" />
+        android:src="@drawable/icon"
+        android:contentDescription="TODO" />
 
 
     <io.github.yavski.fabspeeddial.FabSpeedDial
@@ -28,38 +29,10 @@
         app:fabGravity="bottom_end"
         app:fabMenu="@menu/main_menu"
         app:miniFabBackgroundTint="#fff"
-        app:miniFabTitleTextColor="#000000">
+        app:miniFabTitleTextColor="#000000"
+        >
 
     </io.github.yavski.fabspeeddial.FabSpeedDial>
-    <!--
-<android.support.design.widget.FloatingActionButton
-        android:id="@+id/btn_logout"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:src="@drawable/exit_50px"
-        app:elevation="10dp"
-        android:onClick="onLogoutClick"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:backgroundTint="#fff"
-        android:layout_marginBottom="15dp"
-        android:layout_marginRight="15dp"
-        app:borderWidth="0dp"
-        app:rippleColor="@color/colorPrimary"/>
-
-    <TextView
-        android:id="@+id/text_view_name"
-        android:layout_width="325dp"
-        android:layout_height="42dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:gravity="bottom|center"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-    -->
-
 
     <EditText
         android:id="@+id/name"
@@ -69,11 +42,10 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="14dp"
         android:layout_marginTop="15dp"
-        android:ems="10"
-        android:inputType="textPersonName"
         android:text="name "
         android:textColor="@color/colorPrimaryDark"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:inputType="" />
 
 </RelativeLayout>

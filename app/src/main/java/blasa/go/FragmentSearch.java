@@ -1,8 +1,13 @@
 package blasa.go;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,6 +42,7 @@ public class FragmentSearch extends android.support.v4.app.Fragment {
     private RecyclerView recycler1;
     private DatabaseReference mDatabase;
     private Context context;
+private FirebaseRecyclerAdapter firebaseRecyclerAdapter;
 
     public FragmentSearch() {}
 
@@ -64,17 +70,46 @@ public class FragmentSearch extends android.support.v4.app.Fragment {
     }
 
     private void firebaseSearch(String xx) {
-        Query firebaseSearchQuery = mDatabase.orderByChild("finish").startAt(xx).endAt(xx + "\uf8ff");
+        final Query firebaseSearchQuery = mDatabase.orderByChild("finish").startAt(xx).endAt(xx + "\uf8ff");
 
-        FirebaseRecyclerAdapter<Rides, RidesViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Rides, RidesViewHolder>(
+        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Rides, RidesViewHolder>(
                 Rides.class,
                 R.layout.list_layout,
                 RidesViewHolder.class,
                 firebaseSearchQuery
         ) {
             @Override
-            protected void populateViewHolder(RidesViewHolder viewHolder, Rides model, int position) {
+            protected void populateViewHolder(final RidesViewHolder viewHolder, final Rides model, final int position) {
                 viewHolder.setDetails(context, model.getStart(), model.getFinish(), model.getPhotoURL(), model.getName(), model.getDate(), model.getTime(), model.getPrice(), model.getPhone(), model.getOpt1(), model.getOpt2(), model.getOpt3());
+
+
+
+
+                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+
+        Log.w(TAG, "You clicked on "+position);
+firebaseRecyclerAdapter.getRef(position);
+
+String x = firebaseRecyclerAdapter.getRef(position).getDatabase().toString();
+        Log.d(TAG,x);
+String y = model.getName();
+        Log.d(TAG,y);
+        String w = model.getPhone();
+        Log.d(TAG, w);
+
+/*
+        Intent callIntent = new Intent(Intent.ACTION_CALL); //use ACTION_CALL class
+        callIntent.setData(Uri.parse("555"));    //this is the phone number calling
+
+
+                startActivity(callIntent);  //call activity and make phone call
+
+        */
+
+    }
+});
             }
         };
         recycler1.setAdapter(firebaseRecyclerAdapter);
@@ -118,118 +153,5 @@ public class FragmentSearch extends android.support.v4.app.Fragment {
 
         }
     }
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-public class FragmentSearch extends android.support.v4.app.Fragment {
-    View v;
-    private static final String TAG = "TEST_TEST";
-    private EditText txt_search;
-    private Button btn_search;
-    private RecyclerView recycler1;
-    private Firebase myFirebaseRef;
-    private DatabaseReference mDatabase;
-    private Context context;
-
-
-    public FragmentSearch() {
-
-    }
-
-
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.search_fragment,container,false);
-
-        txt_search = (EditText) v.findViewById(R.id.txt_search);
-       btn_search = (Button) v.findViewById(R.id.btn_search);
-       recycler1 = (RecyclerView) v.findViewById(R.id.recycler1);
-       recycler1.setHasFixedSize(true);
-       recycler1.setLayoutManager(new LinearLayoutManager(context));
-       mDatabase = FirebaseDatabase.getInstance().getReference("users");
-
-       
-       btn_search.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        String xx = txt_search.getText().toString();
-        firebaseSearch(xx);
-
-    }
-});
-        return v;
-
-    }
-
-    private void firebaseSearch(String xx) {
-        Query firebaseSearchQuery = mDatabase.orderByChild("name").startAt(xx).endAt(xx + "\uf8ff");
-
-        FirebaseRecyclerAdapter<User, UserViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<User, UserViewHolder>(
-                User.class,
-                R.layout.list_layout,
-                UserViewHolder.class,
-                firebaseSearchQuery
-        ) {
-            @Override
-            protected void populateViewHolder(UserViewHolder viewHolder, User model, int position) {
-
-            viewHolder.setDetails(context, model.getName(), model.getEmail());
-
-            }
-        };
-
-        recycler1.setAdapter(firebaseRecyclerAdapter);
-
-    }
-
-    //View holder class
-
-
-
-
-
-    public static class UserViewHolder extends RecyclerView.ViewHolder {
-
-View mView;
-
-        public UserViewHolder(View itemView) {
-            super(itemView);
-            mView = itemView;
-        }
-
-        public void setDetails(Context context,String name, String email){
-            CircleImageView circleImageView = (CircleImageView) mView.findViewById(R.id.profile_image);
-            TextView txt_namex = (TextView) mView.findViewById(R.id.txt_namex);
-            TextView txt_emailx = (TextView) mView.findViewById(R.id.txt_emailx);
-            txt_namex.setText(name);
-            txt_emailx.setText(email);
-
-
-        }
-
-    }
-}
-*/
