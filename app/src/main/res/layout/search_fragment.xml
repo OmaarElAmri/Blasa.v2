@@ -7,33 +7,38 @@
 
     <EditText
         android:id="@+id/txt_search"
-        android:layout_width="176dp"
+        android:layout_width="328dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="5dp"
         android:background="@drawable/edittextstyle"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:hint="Search Destination "
+        android:textColor="#0180E4"
+        android:textSize="22sp"
+        android:textStyle="bold" />
 
     <ImageButton
         android:id="@+id/btn_search"
-        android:layout_width="69dp"
-        android:layout_height="65dp"
+        android:layout_width="49dp"
+        android:layout_height="49dp"
         android:layout_alignBottom="@+id/txt_search"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="87dp"
-        android:background="#fff"
-        app:srcCompat="@drawable/search_50px" />
+        android:layout_alignEnd="@+id/txt_search"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/edittextstyle"
+        android:backgroundTint="#0180E4"
+        app:srcCompat="@drawable/search_30px" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler1"
         android:layout_width="match_parent"
-        android:layout_height="417dp"
+        android:layout_height="462dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:paddingTop="50dp">
+        android:paddingTop="30dp">
 
     </android.support.v7.widget.RecyclerView>
 

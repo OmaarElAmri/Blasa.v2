@@ -358,7 +358,7 @@ public class FragmentSettings extends Fragment {
                         }
                     });
         } else {
-           // Toast.makeText(v.getContext(), "No file selected", Toast.LENGTH_SHORT).show();
+           Toast.makeText(v.getContext(), "No file selected", Toast.LENGTH_SHORT).show();
         }
     }
 }

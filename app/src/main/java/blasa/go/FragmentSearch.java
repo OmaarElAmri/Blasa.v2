@@ -60,6 +60,11 @@ private FirebaseRecyclerAdapter firebaseRecyclerAdapter;
         recycler1.setLayoutManager(new LinearLayoutManager(context));
         mDatabase = FirebaseDatabase.getInstance().getReference("rides");
 
+//load last rides
+        String x = "";
+        firebaseSearch(x);
+
+//search
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,31 +96,40 @@ private FirebaseRecyclerAdapter firebaseRecyclerAdapter;
     @Override
     public void onClick(View v) {
 
-        Log.w(TAG, "You clicked on "+position);
-firebaseRecyclerAdapter.getRef(position);
+       // Log.w(TAG, "You clicked on "+position);
+        firebaseRecyclerAdapter.getRef(position);
 
-String x = firebaseRecyclerAdapter.getRef(position).getDatabase().toString();
-        Log.d(TAG,x);
-String y = model.getName();
-        Log.d(TAG,y);
+        String x = firebaseRecyclerAdapter.getRef(position).getDatabase().toString();
+        //Log.d(TAG,x);
         String w = model.getPhone();
-        Log.d(TAG, w);
+        //Log.d(TAG, w);
 
+      /*
         ClipboardManager clipboard = (ClipboardManager) v.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText("phone number", w);
         clipboard.setPrimaryClip(clip);
         Toast.makeText(v.getContext(),"phone number copied to clipboard",Toast.LENGTH_LONG).show();
-/*
-        Intent callIntent = new Intent(Intent.ACTION_CALL); //use ACTION_CALL class
-        callIntent.setData(Uri.parse("555"));    //this is the phone number calling
-
-
-                startActivity(callIntent);  //call activity and make phone call
-
-        */
-
+*/
+        Intent callIntent = new Intent(Intent.ACTION_DIAL); //use ACTION_CALL class
+        callIntent.setData(Uri.parse("tel:"+w));    //this is the phone number calling
+        startActivity(callIntent);  //call activity
     }
 });
+
+                viewHolder.mView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        String s = model.getStart();
+                        String f = model.getFinish();
+                        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                                Uri.parse("https://www.google.com/maps/dir/?api=1&origin="+s+"&destination="+f+"&travelmode=driving"));
+                        startActivity(intent);
+                        return false;
+                    }
+                });
+
+
+
             }
         };
         recycler1.setAdapter(firebaseRecyclerAdapter);
