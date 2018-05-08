@@ -47,7 +47,11 @@
             android:layout_alignTop="@+id/txt_time"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/edittextstyle"
-            android:hint="Date" />
+            android:hint="Date"
+            android:clickable="true"
+            android:editable="false"
+            android:focusable="false"
+            />
 
         <EditText
             android:id="@+id/txt_time"
@@ -56,7 +60,11 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="5dp"
             android:background="@drawable/edittextstyle"
-            android:hint="Time" />
+            android:hint="Time"
+
+            android:clickable="true"
+            android:editable="false"
+            android:focusable="false"/>
     </LinearLayout>
 
 
@@ -73,7 +81,8 @@
             android:layout_height="55dp"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/edittextstyle"
-            android:hint="Price" />
+            android:hint="Price (DT)"
+            android:inputType="number" />
 
         <EditText
             android:id="@+id/txt_phone"
@@ -83,7 +92,7 @@
             android:layout_marginLeft="5dp"
             android:background="@drawable/edittextstyle"
             android:hint="Phone"
-            android:inputType="" />
+            android:inputType="phone" />
     </LinearLayout>
 
     <RelativeLayout

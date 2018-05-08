@@ -410,11 +410,12 @@ btn_register.setOnClickListener(new View.OnClickListener() {
 
 //======================================================================google sign in ======================================================================
     public void onforgotpassclicked(View view) {
-        showProgressDialog();
+
         String userEmail = txt_email.getText().toString();
         if (TextUtils.isEmpty(userEmail)) {
             txt_email.setError("Required.");}
             else {
+            showProgressDialog();
         mAuth.sendPasswordResetEmail(userEmail)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -424,12 +425,17 @@ btn_register.setOnClickListener(new View.OnClickListener() {
                         } else {
                             String userEmail = txt_email.getText().toString();
                             if (TextUtils.isEmpty(userEmail)) {
+
                                 txt_email.setError("Required.");
                             Toast.makeText(MainActivity.this, "Failed to send reset email!", Toast.LENGTH_SHORT).show();
-                        }}
+                        }
+                            Toast.makeText(MainActivity.this, "Failed to send reset email!", Toast.LENGTH_SHORT).show();
+                        }
                         hideProgressDialog();
                     }
+
                 });
+
 
     }
         }

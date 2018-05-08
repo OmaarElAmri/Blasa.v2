@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/sms"
+        android:icon="@drawable/ic_action_sms"
+        android:title="SMS"
+
+        />
+
+    <item
+        android:id="@+id/call"
+        android:icon="@drawable/ic_action_call"
+        android:title="CALL"
+        />
+
+    <item
+        android:id="@+id/map"
+        android:icon="@drawable/ic_action_map"
+        android:title="VIEW MAP"
+        />
+
+</menu>

@@ -1,16 +1,22 @@
 package blasa.go;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
@@ -19,6 +25,10 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * Created by omarelamri on 10/04/2018.
@@ -35,7 +45,7 @@ public class FragmentAdd extends Fragment {
     private Firebase myFirebaseRef;
     private String PROVIDER_ID;
     private Firebase mRef = new Firebase("https://blasa-v2-8675.firebaseio.com/");
-
+    private final Calendar myCalendar = Calendar.getInstance();
     View v;
 
     public FragmentAdd() {
@@ -242,7 +252,6 @@ public class FragmentAdd extends Fragment {
                 if (!validateForm()) {
                     return;
                 }
-
                 rides = new Rides();
                 rides.setStart(txt_from.getText().toString());
                 rides.setFinish(txt_to.getText().toString());
@@ -261,6 +270,98 @@ public class FragmentAdd extends Fragment {
                 Toast.makeText(v.getContext(),"Ride added!",Toast.LENGTH_SHORT).show();
             }
         });
+
+
+//time picker
+        txt_time.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Calendar mcurrentTime = Calendar.getInstance();
+                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mcurrentTime.get(Calendar.MINUTE);
+                TimePickerDialog mTimePicker;
+                mTimePicker = new TimePickerDialog(v.getContext(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        txt_time.setText( selectedHour + ":" + selectedMinute);
+                    }
+                }, hour, minute, true);//Yes 24 hour time
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
+
+
+            }
+        });
+
+
+//date picker
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel();
+            }
+
+        };
+
+        txt_date.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                new DatePickerDialog(v.getContext(), date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+
+
+
+
+
+
+
+//phone format
+        txt_phone.addTextChangedListener(new TextWatcher()
+        {
+
+            public void afterTextChanged(Editable s)
+            {
+
+            }
+
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after)
+            {
+
+            }
+
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count)
+            {
+                String text = txt_phone.getText().toString();
+               int textlength = txt_phone.getText().length();
+
+                if(text.endsWith(" "))
+                    return;
+
+                if(textlength == 3 || textlength == 7 || textlength == 11)
+                {
+                    txt_phone.setText(new StringBuilder(text).insert(text.length()-1, " ").toString());
+                    txt_phone.setSelection(txt_phone.getText().length());
+                }
+
+            }});
+
+
 
       return v;
     }
@@ -318,6 +419,16 @@ public class FragmentAdd extends Fragment {
         }
         return valid;
     }
+
+//date picker
+    private void updateLabel() {
+        String myFormat = "MM/dd/yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        txt_date.setText(sdf.format(myCalendar.getTime()));
+    }
 }
+
+
 
 

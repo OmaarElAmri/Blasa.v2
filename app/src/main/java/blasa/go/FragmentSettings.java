@@ -40,6 +40,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 import io.github.yavski.fabspeeddial.FabSpeedDial;
 
 import static android.app.Activity.RESULT_OK;
@@ -54,7 +56,7 @@ public class FragmentSettings extends Fragment {
     private Firebase myFirebaseRef;
     private FirebaseAuth mAuth;
     private EditText name2;
-    private ImageView profilePicture;
+    //private ImageView profilePicture;
     private Uri mImageUri;
     private StorageReference mStorageRef;
     private StorageTask mUploadTask;
@@ -73,9 +75,11 @@ public class FragmentSettings extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.settings_fragment, container, false);
 
+
+
         progressDialog = new ProgressDialog(v.getContext());
         name2 = (EditText) v.findViewById(R.id.name);
-        profilePicture = (ImageView) v.findViewById(R.id.profilePicture);
+       // profilePicture = (ImageView) v.findViewById(R.id.profilePicture);
 
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser mUser = mAuth.getCurrentUser();
@@ -119,7 +123,8 @@ public class FragmentSettings extends Fragment {
 //Inside onDataChange we can get the data as an Object from the dataSnapshot
 //getValue returns an Object. We can specify the type by passing the type expected as a parameter
                     String data = dataSnapshot.getValue(String.class);
-                    Picasso.get().load(data).into(profilePicture);
+                    CircleImageView circleImageView = (CircleImageView) v.findViewById(R.id.profile_image);
+                    Picasso.get().load(data).into(circleImageView);
 
                 }
 
@@ -159,7 +164,8 @@ public class FragmentSettings extends Fragment {
 //Inside onDataChange we can get the data as an Object from the dataSnapshot
 //getValue returns an Object. We can specify the type by passing the type expected as a parameter
                     String data = dataSnapshot.getValue(String.class);
-                    Picasso.get().load(data).into(profilePicture);
+                    CircleImageView circleImageView = (CircleImageView) v.findViewById(R.id.profile_image);
+                    Picasso.get().load(data).into(circleImageView);
                 }
 
                 //onCancelled is called in case of any error
@@ -199,7 +205,8 @@ public class FragmentSettings extends Fragment {
 //Inside onDataChange we can get the data as an Object from the dataSnapshot
 //getValue returns an Object. We can specify the type by passing the type expected as a parameter
                     String data = dataSnapshot.getValue(String.class);
-                    Picasso.get().load(data).into(profilePicture);
+                    CircleImageView circleImageView = (CircleImageView) v.findViewById(R.id.profile_image);
+                    Picasso.get().load(data).into(circleImageView);
                 }
 
                 //onCancelled is called in case of any error
@@ -286,8 +293,8 @@ public class FragmentSettings extends Fragment {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
             mImageUri = data.getData();
-
-            Picasso.get().load(mImageUri).into(profilePicture);
+            CircleImageView circleImageView = (CircleImageView) v.findViewById(R.id.profile_image);
+            Picasso.get().load(mImageUri).into(circleImageView);
         }
     }
 

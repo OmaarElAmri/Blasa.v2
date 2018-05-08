@@ -1,20 +1,26 @@
 package blasa.go;
 
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
+import android.support.design.internal.NavigationMenu;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -29,6 +35,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.github.yavski.fabspeeddial.FabSpeedDial;
+
 import com.squareup.picasso.Picasso;
 import static com.facebook.share.internal.DeviceShareDialogFragment.TAG;
 
@@ -44,6 +52,10 @@ public class FragmentSearch extends android.support.v4.app.Fragment {
     private RecyclerView recycler1;
     private DatabaseReference mDatabase;
     private Context context;
+    private String x="";
+    private String w="";
+    private String z="";
+    private String i="";
 private FirebaseRecyclerAdapter firebaseRecyclerAdapter;
 
     public FragmentSearch() {}
@@ -63,7 +75,6 @@ private FirebaseRecyclerAdapter firebaseRecyclerAdapter;
 //load last rides
         String x = "";
         firebaseSearch(x);
-
 //search
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,22 +98,94 @@ private FirebaseRecyclerAdapter firebaseRecyclerAdapter;
         ) {
             @Override
             protected void populateViewHolder(final RidesViewHolder viewHolder, final Rides model, final int position) {
+
                 viewHolder.setDetails(context, model.getStart(), model.getFinish(), model.getPhotoURL(), model.getName(), model.getDate(), model.getTime(), model.getPrice(), model.getPhone(), model.getOpt1(), model.getOpt2(), model.getOpt3());
 
+                firebaseRecyclerAdapter.getRef(position);
+                x = firebaseRecyclerAdapter.getRef(position).getDatabase().toString();
+                w = model.getPhone();
+
+//FabSpeedDial
+                final FabSpeedDial fabSpeedDial = (FabSpeedDial) v.findViewById(R.id.fabdial);
+
+                fabSpeedDial.setMenuListener(new FabSpeedDial.MenuListener() {
+                    @Override
+                    public boolean onPrepareMenu(NavigationMenu navigationMenu) {
+                        return true;
+                    }
+
+                    @Override
+                    public boolean onMenuItemSelected(MenuItem menuItem) {
+
+                        if (menuItem.getTitle().equals("SMS")) {
+                            Toast.makeText(v.getContext(),"please select a ride",Toast.LENGTH_SHORT).show();
+                        }else if (menuItem.getTitle().equals("CALL")) {
+                            Toast.makeText(v.getContext(),"please select a ride",Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(v.getContext(),"please select a ride",Toast.LENGTH_SHORT).show();
+                        }
+                        return true;
+                    }
+
+                    @Override
+                    public void onMenuClosed() {
+
+                    }
+                });
+
+                        viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View v) {
+
+                                // Log.w(TAG, "You clicked on "+position);
+                                firebaseRecyclerAdapter.getRef(position);
+                                x = firebaseRecyclerAdapter.getRef(position).getDatabase().toString();
+                                //Log.d(TAG,x);
+                                w = model.getPhone();
+                                //Log.d(TAG, w);
+                                z = model.getStart();
+                                i = model.getFinish();
+
+                               Toast.makeText(v.getContext(),z+" ==> "+i,Toast.LENGTH_SHORT).show();
+
+                                fabSpeedDial.setMenuListener(new FabSpeedDial.MenuListener() {
+                                    @Override
+                                    public boolean onPrepareMenu(NavigationMenu navigationMenu) {
+                                        return true;
+                                    }
+
+                                    @Override
+                                    public boolean onMenuItemSelected(MenuItem menuItem) {
+
+                                        if (menuItem.getTitle().equals("SMS")) {
+
+                                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", w, null)));
 
 
+                                        }else if (menuItem.getTitle().equals("CALL")) {
 
-                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
+                                            Intent callIntent = new Intent(Intent.ACTION_DIAL); //use ACTION_CALL class
+                                            callIntent.setData(Uri.parse("tel:"+w));    //this is the phone number calling
+                                            startActivity(callIntent);  //call activity
+                                        }
+                                        else {
+                                          //  String s = model.getStart();
+                                           // String f = model.getFinish();
+                                            Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                                                    Uri.parse("https://www.google.com/maps/dir/?api=1&origin="+z+"&destination="+i+"&travelmode=driving"));
+                                            startActivity(intent);
+                                        }
+                                        return true;
+                                    }
 
-       // Log.w(TAG, "You clicked on "+position);
-        firebaseRecyclerAdapter.getRef(position);
+                                    @Override
+                                    public void onMenuClosed() {
 
-        String x = firebaseRecyclerAdapter.getRef(position).getDatabase().toString();
-        //Log.d(TAG,x);
-        String w = model.getPhone();
-        //Log.d(TAG, w);
+                                    }
+                                });
+
 
       /*
         ClipboardManager clipboard = (ClipboardManager) v.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
@@ -110,12 +193,19 @@ private FirebaseRecyclerAdapter firebaseRecyclerAdapter;
         clipboard.setPrimaryClip(clip);
         Toast.makeText(v.getContext(),"phone number copied to clipboard",Toast.LENGTH_LONG).show();
 */
+
+
+                              //  startActivity(new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", w, null)));
+
+        /*
         Intent callIntent = new Intent(Intent.ACTION_DIAL); //use ACTION_CALL class
         callIntent.setData(Uri.parse("tel:"+w));    //this is the phone number calling
         startActivity(callIntent);  //call activity
-    }
-});
+*/
+                          }
+                    });
 
+/*
                 viewHolder.mView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
@@ -127,9 +217,7 @@ private FirebaseRecyclerAdapter firebaseRecyclerAdapter;
                         return false;
                     }
                 });
-
-
-
+*/
             }
         };
         recycler1.setAdapter(firebaseRecyclerAdapter);
@@ -137,7 +225,6 @@ private FirebaseRecyclerAdapter firebaseRecyclerAdapter;
 
     //View holder class
     public static class RidesViewHolder extends RecyclerView.ViewHolder {
-
         View mView;
 
         public RidesViewHolder(View itemView) {
@@ -173,5 +260,4 @@ private FirebaseRecyclerAdapter firebaseRecyclerAdapter;
 
         }
     }
-
 }
