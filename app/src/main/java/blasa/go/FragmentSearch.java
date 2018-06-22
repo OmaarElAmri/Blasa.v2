@@ -171,8 +171,6 @@ private FirebaseRecyclerAdapter firebaseRecyclerAdapter;
                                             startActivity(callIntent);  //call activity
                                         }
                                         else {
-                                          //  String s = model.getStart();
-                                           // String f = model.getFinish();
                                             Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
                                                     Uri.parse("https://www.google.com/maps/dir/?api=1&origin="+z+"&destination="+i+"&travelmode=driving"));
                                             startActivity(intent);

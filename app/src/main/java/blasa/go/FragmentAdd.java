@@ -198,12 +198,12 @@ public class FragmentAdd extends Fragment {
                 switch (checkedId) {
                     case R.id.radioButton1:
                         // switch to fragment 1
-                        url1 = "https://image.ibb.co/eAEJPH/musical_40px.png";
+                        url1 = "https://firebasestorage.googleapis.com/v0/b/blasa-v2-8675.appspot.com/o/app%2Fmusical_40px.png?alt=media&token=06a3211f-1d55-4770-956a-db6595d98849";
 
                         break;
                     case R.id.radioButton2:
                         // Fragment 2
-                        url1 = "https://image.ibb.co/gJn54H/Capture.png";
+                        url1 = "https://firebasestorage.googleapis.com/v0/b/blasa-v2-8675.appspot.com/o/app%2FCapture.png?alt=media&token=0823088e-18b5-4ab1-a879-a2a78d8b9bc6";
 
                         break;
                 }
@@ -217,11 +217,11 @@ public class FragmentAdd extends Fragment {
                 switch (checkedId) {
                     case R.id.radioButton3:
                         // switch to fragment 1
-                        url2 = "https://image.ibb.co/f0TCjH/suitcase_40px.png";
+                        url2 = "https://firebasestorage.googleapis.com/v0/b/blasa-v2-8675.appspot.com/o/app%2Fsuitcase_40px.png?alt=media&token=d8cd4fa3-1596-4348-835f-24345743fe08";
                         break;
                     case R.id.radioButton4:
                         // Fragment 2
-                        url2 = "https://image.ibb.co/eB1bBx/baggage_40px.png";
+                        url2 = "https://firebasestorage.googleapis.com/v0/b/blasa-v2-8675.appspot.com/o/app%2Fbaggage_40px.png?alt=media&token=df181956-d21b-4a99-8a7a-3959985b5197";
                         break;
                 }
             }
@@ -234,12 +234,12 @@ public class FragmentAdd extends Fragment {
                 switch (checkedId) {
                     case R.id.radioButton5:
                         // switch to fragment 1
-                        url3 = "https://image.ibb.co/dvTCjH/smoking_40px.png";
+                        url3 = "https://firebasestorage.googleapis.com/v0/b/blasa-v2-8675.appspot.com/o/app%2Fsmoking_40px.png?alt=media&token=67c1bdb6-4368-4510-9edd-18ecec06ed7a";
 
                         break;
                     case R.id.radioButton6:
                         // Fragment 2
-                        url3 = "https://image.ibb.co/fMDZyc/nosmoking_40px.png";
+                        url3 = "https://firebasestorage.googleapis.com/v0/b/blasa-v2-8675.appspot.com/o/app%2Fnosmoking_40px.png?alt=media&token=2a66e794-c3de-4b45-9e65-a5653f62f067";
 
                         break;
                 }

@@ -35,6 +35,7 @@
             android:theme="@style/AppTheme">
 
         </activity>
+
     </application>
 
 </manifest>

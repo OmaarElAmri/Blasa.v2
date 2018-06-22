@@ -1,6 +1,8 @@
 package blasa.go;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -202,8 +204,7 @@ btn_register.setOnClickListener(new View.OnClickListener() {
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInWithEmail", task.getException());
-                            Toast.makeText(MainActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            builder1();
                         } else {
 
 
@@ -439,6 +440,24 @@ btn_register.setOnClickListener(new View.OnClickListener() {
 
     }
         }
+
+    public void builder1(){
+        {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Email or Passwrod incorrect !")
+                    .setCancelable(false)
+                    .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //do things
+
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
+
+        }
+    }
+
 
     /*private void printKeyHash() {
         try{
