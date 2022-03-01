@@ -1,4 +1,6 @@
 # Blasav2
+![Code Quality Score](https://api.codiga.io/project/31499/score/svg)
+
 blasa ride-sharing app with firebase as my final bachelor year project 
 
 ![alt text](https://github.com/OmaarElAmri/Blasav2/blob/master/blasa.gif)
