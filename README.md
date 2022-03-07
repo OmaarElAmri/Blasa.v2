@@ -1,7 +1,7 @@
 # Blasav2
 ![Code Quality Score](https://api.codiga.io/project/31499/score/svg)
 ![Code Grade](https://api.codiga.io/project/31499/status/svg) 
-<img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/OmaarElAmri/Blasa.v2">
+<img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/omaarelamri/Blasa.v2?style=social">
 <img alt="Lines of code" src="https://img.shields.io/tokei/lines/GITHUB/omaarelamri/Blasav2">
 <img alt="GitHub" src="https://img.shields.io/github/license/omaarelamri/blasa.v2"> <br>
 blasa ride-sharing app with firebase as my final bachelor year project 
