@@ -1,4 +1,4 @@
-# Blasav2
+# Blasav2 (DEPRECATED)
 ![Code Quality Score](https://api.codiga.io/project/31499/score/svg)
 ![Code Grade](https://api.codiga.io/project/31499/status/svg) 
 <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/omaarelamri/Blasa.v2?style=social">
